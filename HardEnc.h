@@ -32,16 +32,16 @@ HardEnc myGpsOEnc (12, 11);
 //! Definition Methode _update
 void HardEnc::_update() {
     myRadioEnc._diff = myRadioEnc.read() / 4;
-    if (myRadioEnc._diff) {myRadioEnc.write(0);}; // => SimObjects(update)???
+    if(myRadioEnc._diff != 0) {myRadioEnc.write(0);} // => SimObjects(update)???
 
     myApEnc._diff    = myApEnc.read() / 4;
-    if (myApEnc._diff) {myApEnc.write(0);};
+    if (myApEnc._diff != 0) {myApEnc.write(0);}
 
     myGpsOEnc._diff  = myGpsOEnc.read() / 4;
-    if (myGpsOEnc._diff) {myGpsOEnc.write(0);};
+    if (myGpsOEnc._diff != 0) {myGpsOEnc.write(0);}
 
     myGps1Enc._diff   = myGps1Enc.read() / 4;
-    if (myGps1Enc._diff) {myGps1Enc.write(0);};}
+    if (myGps1Enc._diff != 0) {myGps1Enc.write(0);}}
 
 
 //! Deklaration class HardEncSw

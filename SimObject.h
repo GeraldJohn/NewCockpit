@@ -1,10 +1,16 @@
 #ifndef SIMOBJECT_H
 #define SIMOBJECT_H
 
+//! Aid for recording the dataref identifier
 #define DataRefIdent const char
 
+//! Deklaration class SimObject
 class SimObject {
 public:
+        //! \param powerSource Pointer to bool which defines whether simulated
+        //!        power is available to this SimObject
+        //!  Definition der öffentlichen Funktion setPowerSource
+        //!  Setzen der Variablen _powerSource und _needsPower
 
     void setPowerSource(const bool *powerSource) {
         _powerSource = powerSource;
@@ -14,9 +20,12 @@ public:
         else
             _needsPower = true; }
 
+        //! Deklaration der statischen Methoden setup und update
+        //! Variable updateOutput auf true voreingestellt
     static void setup(void);
     static void update(bool updateOutput = true);
 
+        //! Default simulated power source
     static bool hasPower;
 
 protected:
@@ -27,9 +36,11 @@ protected:
     virtual void _setup(void) = 0;
     virtual void _update(bool updateOutput = true) = 0;
 
+        //! Specifies if this object needs simulated power available to operate.
     bool _needsPower;
 
-
+        //! Pointer to power source.
+        /*! If _needsPower is set, this will be checked during update.*/
     const bool *_powerSource;
 
 private:
@@ -38,10 +49,12 @@ private:
 
 };
 
+//! Initialisierung static Variablen
 bool SimObject::hasPower = false;
 SimObject *SimObject::_first = 0;
 
 
+//! Definition
 void SimObject::setup() {
     if (_first != 0) { // if at least one SimObject is instantiated
         SimObject *buf = _first;

@@ -3,6 +3,7 @@
 
 #include "SimData.h"
 
+//! Deklaration class SimGpsBase
 class SimGpsBase : public SimData {
 
 public:
@@ -10,7 +11,7 @@ public:
             const int &NKSt = 0,
             const bool *hasPowerFlag = &SimObject::hasPower);
 
-    static int _active_mode; //aktuell gewählter Modus
+    static int _active_mode;         //aktuell gewählter Modus
     static bool _print;
     static const String gpsH[32];
 private:
@@ -20,56 +21,60 @@ private:
 };
 
 
+//!Initialisierung static
 int SimGpsBase::_active_mode = 0;
 bool SimGpsBase::_print = true;
 
+/// Definition String Array gpsH[32]
 const String SimGpsBase::gpsH[32] = {
-    " ", //1
-    "Direct: ",
-    "Dist: ",
-    "Time: ",
+    "                    ", //1
+    "Direct:             ",
+    "Dist:               ",
+    "Time:               ",
 
-    "Range: ", //2
-    "Mode: ",
+    "Range:              ", //2
+    "Mode:               ",
     "Symbols: A W V N T w",
-    " : ",
+    "active:             ",
 
-    "Baro: ", //3
-    " : ",
-    " : ",
-    " : ",
+    "Baro:               ", //3
+    " :                  ",
+    " :                  ",
+    " :                  ",
 
-    " 4 : ", //4
-    " : ",
-    " : ",
-    " : ",
+    " 4 :                ", //4
+    " :                  ",
+    " :                  ",
+    " :                  ",
 
-    " 5 : ", //5
-    " : ",
-    " : ",
-    " : ",
+    " 5 :                ", //5
+    " :                  ",
+    " :                  ",
+    " :                  ",
 
-    "0 1 2 sw_reg 3 4 ", //6
-    " ",
-    " ",
-    " ",
+    "0 1 2 sw_reg 3 4    ", //6
+    "                    ",
+    "                    ",
+    "                    ",
 
-    "5 6 7 sw_reg 8 9 ", //7
-    " ",
-    " ",
-    " ",
+    "5 6 7 sw_reg 8 9    ", //7
+    "                    ",
+    "                    ",
+    "                    ",
 
-    "0 1 2 led_reg 3 4 5", //8
-    " ",
-    " ",
-    " " };
+    "0 1 2 led_reg 3 4 5 ", //8
+    "                    ",
+    "                    ",
+    "                    " };
 
+//! Definition class----------------------------------------------------------
 SimGpsBase::SimGpsBase(
         const int &NKSt,
         const bool *hasPowerFlag
         ) : SimData(NKSt, hasPowerFlag)
 {}
 
+//! Definition Methode _update
 void SimGpsBase::_update(bool updateOutput){}//end void
 
 

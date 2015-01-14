@@ -4,7 +4,8 @@
 #include "SimLed.h"
 #include "SystemAnnc.h"
 
-
+/// Rote Warnleuchten
+/// erste LED von links
 DataRefIdent r1Ident[][58] = {
     "sim/cockpit2/annunciators/low_voltage",
     "sim/cockpit2/annunciators/generator_off[0]",
@@ -17,6 +18,7 @@ SimLEDBase *r1Anncs[] = {
     new SimLEDIntDR(-1, -1, r1Ident[2], 1, 1, false, false)
 };
 
+/// zweite LED von links
 DataRefIdent r2Ident[][58] = {
     "sim/cockpit2/annunciators/fuel_pressure"
 };
@@ -25,6 +27,7 @@ SimLEDBase *r2Anncs[] = {
     new SimLEDIntDR(-1, -1, r2Ident[0], 1, 1, false, false)
 };
 
+/// dritte LED
 DataRefIdent r3Ident[][58] = {
     "sim/cockpit2/annunciators/oil_pressure_low[0]",
     "sim/cockpit2/annunciators/oil_pressure_low[1]"
@@ -34,6 +37,7 @@ SimLEDBase *r3Anncs[] = {
     new SimLEDIntDR(-1, -1, r3Ident[1])
 };
 
+/// vierte LED
 DataRefIdent r4Ident[][58] = {
     "sim/cockpit2/annunciators/inverter_off[0]",
     "sim/cockpit2/annunciators/inverter_off[1]"
@@ -45,6 +49,7 @@ SimLEDBase *r4Anncs[] = {
     new SimLEDIntDR(-1, -1, r4Ident[3])
 };
 
+/// fünfte Led
 DataRefIdent r5Ident[][58] = {
     "sim/cockpit2/electrical/APU_generator_on",
     "sim/operation/failures/rel_APU_press"
@@ -54,6 +59,7 @@ SimLEDBase *r5Anncs[] = {
     new SimLEDIntDR(-1, -1, r5Ident[1])
 };
 
+/// sechste Led
 DataRefIdent r6Ident[][58] = {
     "sim/cockpit2/annunciators/stall_warning"
 };
@@ -62,14 +68,17 @@ SimLEDBase *r6Anncs[] = {
 };
 
 
+//! 6 Cautions LEDs rot vlnr + 1 Master caution
+/// FlightSimInteger caution[7];
+
 DataRefIdent cautionIdent[][58] = {
     "sim/cockpit/electrical/gpu_on",
     "sim/cockpit2/annunciators/oil_pressure",
     "sim/cockpit2/annunciators/oil_temperature",
     "sim/cockpit2/annunciators/master_caution"
 };
-// ledNr, regNr, *ident,low, high, invert, enableTest, *hasPowerFlag
 
+//                     ledNr, regNr, *ident,low, high, invert, enableTest, *hasPowerFlag
 SimLEDBase *caution[] = {
     /* new SimLEDIntDR(0, 2, cautionIdent[0]),
       new SimLEDIntDR(1, 2, cautionIdent[1]),
@@ -80,9 +89,10 @@ SimLEDBase *caution[] = {
       new SimLEDIntDR(6, 0, cautionIdent[6]),//master caution */
 };
 
+//! 6 Warnungen LEDs gelb vlnr
 //FlightSimInteger warning[6];
 DataRefIdent warningIdent[][58] = {
-    // "sim/567890123456789012345678901234567890123456789012345678"
+//  "sim/567890123456789012345678901234567890123456789012345678"
     "sim/cockpit2/annunciators/gear_warning",
     "sim/cockpit/warnings/annunciators/generator_off[0]",
     "sim/cockpit/warnings/annunciators/generator_off[1]",
@@ -102,6 +112,7 @@ SimLEDBase *warning[] = {
     new SimLEDIntDR(3, 1, warningIdent[5])
 };
 
+//! 6 Radio LEDs Select vlnr ggbbrr
 //FlightSimInteger radio_active[6];
 DataRefIdent radio_actIdent[][58] = {
     "sim/cockpit2/radios/actuators/audio_selection_com1",
@@ -120,6 +131,7 @@ SimLEDBase *radio_act[] = {
     new SimLEDIntDR(5, 5, radio_actIdent[5])
 };
 
+//! 6 + 2 AutoPilot LEDs d2u vlnr grbgrb gg
 //FlightSimInteger ap_active[7];
 DataRefIdent auto_actIdent[][58] = {
     "sim/cockpit2/autopilot/altitude_hold_status",
@@ -142,6 +154,7 @@ SimLEDBase *auto_act[] = {
 };
 
 
+//! 4 Klappen LEDs gelb up2down     [0]
 DataRefIdent led_flapsIdent[][58] = {
     "sim/flightmodel/controls/flaprat"
 };
@@ -152,6 +165,7 @@ SimLEDBase *led_flaps[] = {
     new SimLEDFloatDR(7, 1, led_flapsIdent[0], 1.00, 1),
 };
 
+//! 1 Bremsen LED rot                [1]
 DataRefIdent led_brakeIdent[][58] = {
     "sim/cockpit2/controls/parking_brake_ratio"
 };
@@ -160,6 +174,7 @@ SimLEDBase *led_brake = {
 };
 
 
+//! 6 Fahrwerk LEDs rot und grün    [2-4]
 DataRefIdent led_gearIdent[][58] = {
     "sim/aircraft/parts/acf_gear_deploy[0]",
     "sim/aircraft/parts/acf_gear_deploy[1]",
@@ -178,6 +193,7 @@ SimLEDBase *led_gear[] = {
     new SimLEDIntDR (6, 0, led_gearIdent[3])
 };
 
+//! 2 Engines LEDs l2r grün         [5-6]
 DataRefIdent led_engineIdent[][58] = {
     "sim/flightmodel2/engines/engine_is_burning_fuel[0]",
     "sim/flightmodel2/engines/engine_is_burning_fuel[1]"

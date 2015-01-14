@@ -3,36 +3,47 @@
 
 #include "SimLed.h"
 
+//! Deklaration class HardLed
 class HardLed {
 public:
     HardLed();
+    /// Definiert PinModes
     static void _setup();
 
+    /// Schalte latchPin 0-1 und ruft shiftOut auf
     static void _update();
 
+    /// Sendet Bits an DataPin mit Hilfe von clockPin
     static void _shiftOut(byte myreg_byte);
 
 private:
+    /// Deklariert Ic Pins
     static const byte dataPin;
     static const byte latchPin;
     static const byte clockPin;
 };
 
+//!Definition class HardLed
 HardLed::HardLed() {}
 
+//! Definition der static Vars
 const byte HardLed::dataPin = 16;
 const byte HardLed::latchPin = 17;
 const byte HardLed::clockPin = 18;
 
-//Object Initialisierung
+//!Object Initialisierung
 HardLed Led;
 
+//! Definition Methode setup
 void HardLed::_setup(){
     pinMode(HardLed::latchPin, OUTPUT);
     pinMode(HardLed::clockPin, OUTPUT);
     pinMode(HardLed::dataPin, OUTPUT);
 }
 
+//! Definition Methode _update
+//! Auslesen der led_byte[] und Aufruf der shiftOut Methode (led_byte[])
+//! Danach nullen der led_byte[]
 void HardLed::_update(){
     digitalWrite(latchPin, 0);
 
@@ -44,6 +55,8 @@ void HardLed::_update(){
     digitalWrite(latchPin, 1);
 }// end prepare_shift();
 
+//! Definition Methode _shiftOut
+//! Setzen der Led Pin gemäß Vorbereitung
 void HardLed::_shiftOut(byte myreg_byte) {
 
     int i;

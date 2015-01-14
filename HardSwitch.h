@@ -1,6 +1,7 @@
 #ifndef HARDSWITCH_H
 #define HARDSWITCH_H
 
+//! Deklaration class HardSwitch
 class HardSwitch{
 public:
     HardSwitch();
@@ -23,6 +24,7 @@ protected:
 
 };
 
+//!Definition class HardSwitch
 HardSwitch::HardSwitch() {}
 
 byte HardSwitch::sw_byte[10];
@@ -30,17 +32,19 @@ byte HardSwitch::changedBit[10];
 
 const byte HardSwitch::latchPin = 20;
 const byte HardSwitch::clockPin = 21;
-const byte HardSwitch::dataPin = 19;
+const byte HardSwitch::dataPin  = 19;
 
 //Object
 HardSwitch Switch;
 
+//! Definition setup
 void HardSwitch::_setup(){
     pinMode(HardSwitch::latchPin, OUTPUT);
     pinMode(HardSwitch::clockPin, OUTPUT);
-    pinMode(HardSwitch::dataPin, INPUT);
+    pinMode(HardSwitch::dataPin,  INPUT);
 }
 
+//!Definition Methode _update()
 void HardSwitch::_update(){
     int n;
     byte reg_byte_old[10];
@@ -63,16 +67,19 @@ byte HardSwitch::shiftIn(int myDataPin, int myClockPin) {
 
 
 
-    for (i = 7; i >= 0; i--) {
+    for (i = 7; i >= 0; i--)  {
         digitalWrite(myClockPin, 0);
         delayMicroseconds(2);
         temp = digitalRead(myDataPin);
 
         if (temp) {
             pinState = 1;
+            ///set the bit to 0 no matter what
             myDataIn = myDataIn | (1 << i);
         }
         else {
+            ///turn it off -- only necessary for debuging
+            ///print statement since myDataIn starts as 0
             pinState = 0;
         }
         digitalWrite(myClockPin, 1);

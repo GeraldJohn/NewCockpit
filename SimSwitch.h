@@ -151,9 +151,12 @@ public:
     int _reg_nr;
     int _if_true;
     int _if_false;
-
     void _update(bool updateOutput = true);
+
 private:
+    int _switched = 0;
+    int _switched_old = 0;
+
 };
 
 //! Definition class SimSwitchLocal
@@ -189,7 +192,6 @@ void SimSwitchLocal::_update(bool updateOutput) {
                     /// Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myRadioEncSw._Cmode_set = -1;
 
-                    /// -> Lcd
                     /// Setze Flag für Lcd print
                     SimRadioData::_print = true;
                     SimStbyRadioData::_print = true;
@@ -249,50 +251,52 @@ void SimSwitchLocal::_update(bool updateOutput) {
                     /// Setze Flag für Lcd print
                     SimGpsIntData::_print = true;
                 }//endif reg_nr == 4
-            }//endif sw_byte
 
 
-            /// Swap Taster wurde true
-            if (_reg_nr == 2 && _sw_nr == 5){
-                if(SimRadioData::_modeSet < 6){
-                    int swap = 0;
-                    if (swap < HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)){
+
+                /// Swap Taster wurde true
+                if (_reg_nr == 2 && _sw_nr == 5){
+                    //_switched_old = _switched;
+                    //_switched = 1;
+                    if(SimRadioData::_modeSet < 6){
+                        //  if(_switched > _switched_old){
                         SimStbyRadioData::_swap = true;
-                        swap = HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 >> _sw_nr);     }
+                        blink::_blink = true;
 
-                    /// Setze Flag für Lcd print
-                    SimStbyRadioData::_print = true;
-                    SimRadioData::_print = true;
+                        /// Setze Flag für Lcd print
+                        //SimStbyRadioData::_print = true;
+                        //SimRadioData::_print = true;
 
-                    /// Setze _CMode_set auf -1 => CMode_set = CModeMax
-                    myRadioEncSw._Cmode_set = -1;
-                }
-                else {     //SimSwitchBase::sw_radio[0]._active = true
-                }
-            }//endif reg 2 sw 5
+                        /// Setze _CMode_set auf -1 => CMode_set = CModeMax
+                        myRadioEncSw._Cmode_set = -1;
+                        //}
+                        //else { SimStbyRadioData::_swap = false;
+                        //}
+                    }//endif modeset
+                }//endif reg 2 sw 5
 
-            /// reset Taster wurde true
-            if (_reg_nr == 2 && _sw_nr == 7) {
-                //if (HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)){
-                masterCaution.reset();
-                blink::_blink = true;
-                //}
-            }//endif re 2 sw 7
+                /// reset Taster wurde true
+                if (_reg_nr == 2 && _sw_nr == 7) {
+                    //if (HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)){
+                    masterCaution.reset();
+                    blink::_blink = true;
+                    //}
+                }//endif re 2 sw 7
 
-            /// recall Taster wurde true
-            // (!HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)
-            if (_reg_nr == 2 && _sw_nr == 6) {
-                masterCaution.setRecall(1);
-                blink::_blink = true;
-            }//endif reg 2 sw 6
+                /// recall Taster wurde true
+                // (!HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)
+                if (_reg_nr == 2 && _sw_nr == 6) {
+                    masterCaution.setRecall(1);
+                    blink::_blink = true;
+                }//endif reg 2 sw 6
 
-
+            }//endif sw_byte
         }// end if changedBit
     }//end if updateOutput
 }//end void
 
 
 
-//End Switches
+    //End Switches
 
 #endif // SIMSWITCH_H

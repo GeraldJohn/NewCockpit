@@ -18,7 +18,7 @@
 #include "AssignSwitch.h"
 
 
-#include "SimLcd.h"
+//#include "SimLcd.h"
 #include "SimData.h"
 #include "SimDivData.h"
 #include "SimApData.h" "
@@ -45,7 +45,7 @@ void loop() {
     HardEncSw::_update();
     HardLed::_update();
     HardSwitch::_update();
-    HardLcd::_update();
+    //HardLcd::_update();
     contrast_brightn::_update();
     blink::_doBlink();
 

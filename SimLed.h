@@ -5,14 +5,23 @@
 #include "HardEnc.h"
 #include "SimDivData.h"
 
+/*! High-level dataref-to-LED linking class*/
+/*! Incorporating bulb-test and power-available features.*/
+//! Deklaration class SimLEDBase als abgeleitete von SimObject
 class SimLEDBase : public SimObject {
 public:
+    //! Deklaration und Definition der Methoden isActive, isLit, lightTest und enableTest
+    //! Setzen der: protected bool _active, private: bool _lit, static bool _testAll, bool _allowTest
+    /// True if input conditions would cause this LED to light
     bool isActive(void) {return _active;}
 
+    /// True if this LED should light, applying filters (power, test etc)
     bool isLit(void) {return _lit;}
 
+    /// Enable/disable this SimLED's participation in lightTests
     void enableTest (bool allowTest) {_allowTest = allowTest;}
 
+    /// Methode Enable bulb test mode
     static void lightTest(bool lightAll) {_testAll = lightAll;}
 
     static byte _led_byte[6];
@@ -41,9 +50,11 @@ private:
 
 }; //end Deklaration class SimLEDBase
 
+//! Initialise static data members = Definition
 bool SimLEDBase::_testAll = false;
 byte SimLEDBase::_led_byte[6];
 
+//! Definition class SimLEDBase
 SimLEDBase::SimLEDBase(const int &ledNr,
                        const int &regNr,
                        const bool &enableTest,
@@ -56,20 +67,26 @@ SimLEDBase::SimLEDBase(const int &ledNr,
     _addToLinkedList();
 } //end constructor
 
+//! Definition Methode _update
+/// Determine whether this SimLED should be lit
 void SimLEDBase::_update(bool updateOutput) {
 
+    //!Überprüfung der _active Voraussetzungen
     _updateActive();
 
     _lit = _active;
 
+    /// we are lit if bulb-test is active
     if( (_allowTest == true) && (_testAll == true) ){
         _lit = true;
     }
 
+    /// we are not lit if the sim isn't running or no simulated power
     if( !FlightSim.isEnabled() || !SimDivData::_power_is_on) {
         _lit = false;
     }
 
+    /// unless ordered otherwise, light or extinguish LED based on our lighting state
     if (updateOutput){
         SimLEDBase::_led_byte[_reg_nr] += (_lit << _led_nr);
     }
@@ -77,6 +94,7 @@ void SimLEDBase::_update(bool updateOutput) {
 
 
 //---------------------------------------------------------------------------------------------
+//! Deklaration class SimLEDIntDR
 class SimLEDIntDR : public SimLEDBase {
 public:
     SimLEDIntDR(const int &ledNr,
@@ -100,6 +118,7 @@ private:
 }; //end Deklaration
 
 
+//! Definition class SimLEDIntDR
 SimLEDIntDR::SimLEDIntDR(const int &ledNr,
                          const int &regNr,
                          const char *ident,
@@ -123,6 +142,7 @@ SimLEDIntDR::SimLEDIntDR(const int &ledNr,
 
 } //end constructor
 
+//! Definition Methode _updateActive
 void SimLEDIntDR::_updateActive() {
     _active = (_lowLimitInt <= _drInt && _drInt <= _highLimitInt);
     if (_inverse == true) {
@@ -132,6 +152,7 @@ void SimLEDIntDR::_updateActive() {
 } //end Methode
 
 //--------------------------------------------------------------------------------------------
+//! Deklaration class SimLEDFloatDR
 class SimLEDFloatDR : public SimLEDBase {
 public:
     SimLEDFloatDR(const int &ledNr,
@@ -154,6 +175,7 @@ private:
 }; //end Deklaration
 
 
+//! Definition class SimLEDFloatDR
 SimLEDFloatDR::SimLEDFloatDR(const int &ledNr,
                              const int &regNr,
                              const char *ident,
@@ -178,6 +200,7 @@ SimLEDFloatDR::SimLEDFloatDR(const int &ledNr,
     _inverse = invertLimits;
 } // constructor
 
+//! Definition Methode _updateActive
 void SimLEDFloatDR::_updateActive() {
     _active = (_lowLimitFloat <= _drFloat && _drFloat <= _highLimitFloat);
     if (_inverse == true) {
@@ -186,6 +209,7 @@ void SimLEDFloatDR::_updateActive() {
 } //end Methode
 
 //----------------------------------------------------------------------------------------------
+//! Deklaration class SimLEDLocal
 class SimLEDLocal : public SimLEDBase {
 public:
     SimLEDLocal(const int &ledNr,
@@ -196,9 +220,11 @@ public:
     void setActive(bool active) { _active = active; }
 
 private:
+    //! Methode _updateActive
     void _updateActive();
 }; //end Deklaration
 
+/// Definition class
 SimLEDLocal::SimLEDLocal(
         const int &ledNr,
         const int &regNr,
@@ -208,30 +234,37 @@ SimLEDLocal::SimLEDLocal(
 
 { _active = false; }
 
+//! Definition Methode _updateActive
 void SimLEDLocal::_updateActive() {
     switch (_led_nr) {
     case 0:
+        /// Efis Enc Led rot
         myGpsOEncSw._Cmode_set != 1 ? setActive(1) : setActive(0);
         break;
     case 1:
+        /// Efis Enc Led gruen
         myGpsOEncSw._Cmode_set <= 1 ? setActive(1) : setActive(0);
         break;
     case 2:
-        myGps1EncSw._Cmode_set != 1 ? setActive(1) : setActive(0);
+        /// Gps Enc Led rot
         break;
     case 3:
-        myGps1EncSw._Cmode_set <= 1 ? setActive(1) : setActive(0);
+        /// Gps Enc Led gruen
         break;
     case 4:
+        /// Radio Enc Led rot
         myRadioEncSw._Cmode_set != 1 ? setActive(1) : setActive(0);
         break;
     case 5:
+        /// Radio Enc Led gruen
         myRadioEncSw._Cmode_set <= 1 ? setActive(1) : setActive(0);
         break;
     case 6:
+        /// Autopilot Enc Led rot
         myApEncSw._Cmode_set != 1 ? setActive(1) : setActive(0);
         break;
     case 7:
+        /// Autopilot Enc Led gruen
         myApEncSw._Cmode_set <= 1 ? setActive(1) : setActive(0);
         break;
     default:

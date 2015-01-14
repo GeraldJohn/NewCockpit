@@ -6,20 +6,21 @@
 #include "SimLed.h"
 #include "HardSwitch.h"
 
+//! Deklaration class SimGpsLocal
 class SimGpsLocal : public SimGpsBase {
 
 public:
-    SimGpsLocal (byte *source,
-                 const int &Mode = 0, //Zugehörigkeits Modus
-                 const int &Row = 0,
-                 const int &Pos = 9,
-                 const int &NKSt = 0,
-                 const bool *hasPowerFlag = &SimObject::hasPower);
+    SimGpsLocal  (byte  *source,
+                  const int   &Mode = 0,               //Zugehörigkeits Modus
+                  const int   &Row = 0,
+                  const int   &Pos = 9,
+                  const int   &NKSt = 0,
+                  const bool  *hasPowerFlag = &SimObject::hasPower);
 
 protected:
     String _gpsD = "", _gpsD_old = "";
 private:
-    int _mode, _row, _pos;
+    int  _mode, _row, _pos;
     static short _active_row;
 
     byte _source;
@@ -29,28 +30,34 @@ private:
     void _updateActive();
     void print_Lcd(); };
 
+//! Definition class SimGpsLocal
 SimGpsLocal::SimGpsLocal( byte *source,
-                          const int &Mode, //Zugehörigkeits Modus
-                          const int &Row,
-                          const int &Pos,
-                          const int &NKSt,
-                          const bool *hasPowerFlag
-                          ) : SimGpsBase(NKSt, hasPowerFlag),
+                         const int  &Mode,             //Zugehörigkeits Modus
+                         const int  &Row,
+                         const int  &Pos,
+                         const int  &NKSt,
+                         const bool *hasPowerFlag
+                         ) : SimGpsBase(NKSt, hasPowerFlag),
     _mode(Mode),
     _row(Row),
     _pos(Pos),
     _source(*source)
 { }
 
+//! Definition Methode _setup
 void SimGpsLocal::_setup(void) {}
 
+//! Definition Methode _update
 void SimGpsLocal::_update(bool updateOutput){
 
+    /// Ist der interne Mode gleich dem aktiven Mode
     //if (_mode == _active_mode){
     // _gpsD_old = _gpsD;
 
+        //!Led Check_Mode:
     if (_active_mode == 7){
 
+            //!led_byte Anzeige
         //String led_byte_D[6];
 
         //for (int i = 0; i < 6; i++){
@@ -76,8 +83,10 @@ void SimGpsLocal::_update(bool updateOutput){
         Lcd2.print (String(SimLEDBase::_led_byte[5], BIN));
     }
 
+        //!Sw Check_Mode:
     if (_active_mode == 5){
 
+            //!sw_byte Anzeige
         //String led_byte_D[6];
 
         //for (int i = 0; i < 6; i++){
@@ -101,8 +110,10 @@ void SimGpsLocal::_update(bool updateOutput){
         Lcd2.print (String(HardSwitch::sw_byte[4], BIN));
     }
 
+        //!SW Check_Mode2:
     if (_active_mode == 6){
 
+            //!Sw_byte Anzeige
         //String led_byte_D[6];
 
         //for (int i = 0; i < 6; i++){

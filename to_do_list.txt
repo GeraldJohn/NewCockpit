@@ -1,0 +1,50 @@
+Prüfen:
+Hard_lcd::update  Nutzung
+    zB LCD.print nur für alle geänderten Strings:
+        zB 8 Infostring +  >= 8 Datastring
+            feste Längen; feste Positionen
+
+freq.change bei no NKst fehler
+
+once Befehl
+
+GPS LCD Seiten für sw regbyte und led bts Anzeigen einrichten!!!!!
+.print nur bei Änderung
+
+
+
+Ändern:
+Werte nach FlightSim.isEnabled aktualisieren? und anzeigen
+
+ATC Werte ohne STDB direkt wählen;ok Anzeige ohne STDB
+Swap sendet Signal
+
+wie bei b737 Sammel Leds für jede Hard Led, ggf. Hard Switches
+Zuordnungen ausgliedern und nach Flugzeugtyp unterscheiden namespace oder xy_assign.h
+
+
+Fehler:
+Bei Radio Lcd ständiger print befehl => Dauerblinken
+bei all annuciators eigen Leds einbeziehen
+erste Stelle bei ATC Verstellung hinterer Stellen, nur im Pc nicht im LCD
+Localswitches gehen nicht
+
+
+Optimieren:
+Led Anzeige gemäß Avionics on bzw Power on
+Test_all Schalter
+Reset Warnings
+
+
+Erweitern:
+GPS und EFIS Anzeigen entwerfen und programieren:
+inner Enc steurt Werte; outer Enc setzt _active row
+outer EncSw startet ChangeMode; inner EncSw beendet ChangeMode?
+GPS Steuerung
+efis ctr Mode
+
+Erledigt:
+HDG ist Anzeige; ok
+Starter schalternull auf fuel valves; geändert in keypos dh. tank zuordnungen
+--Contrast_Bright::Output nur bei Änderung: verringert Flimmern nicht
+Encoder change für Range in EFIS mode

@@ -5,23 +5,25 @@
 #include "HardEnc.h"
 #include "blink.h"
 
+
+//! Deklaration class SimGpsIntData
 class SimGpsIntData : public SimGpsBase {
 
 public:
-    SimGpsIntData(const char *ident,
+    SimGpsIntData(const char  *ident,
                   const int &Page, //Zugehörigkeits Modus
-                  const int &Row = 0,
-                  const int &Pos = 9,
-                  const int &CModeMax = 1, //max Einstell Pos
-                  const int &LowLimit = 0, //für Parts
-                  const int &UpLimit = 9, //für Parts
-                  const float &Faktor = 1, //für NKSt
-                  const bool &Jump = true, //Überspringen an Grenzwerten
-                  const int &NKSt = 0,
-                  const bool *hasPowerFlag = &SimObject::hasPower);
+                  const int   &Row = 0,
+                  const int   &Pos = 9,
+                  const int   &CModeMax = 1,         //max Einstell Pos
+                  const int   &LowLimit = 0,     //für Parts
+                  const int   &UpLimit = 9,      //für Parts
+                  const float &Faktor = 1,         //für NKSt
+                  const bool  &Jump = true,       //Überspringen an Grenzwerten
+                  const int   &NKSt = 0,
+                  const bool  *hasPowerFlag = &SimObject::hasPower);
 
     FlightSimInteger _drInt;
-    short _changemode; //Pos der aktuellen Änderung
+    short _changemode;          //Pos der aktuellen Änderung
     int _cmodemax;
 
 protected:
@@ -37,19 +39,21 @@ private:
     void change_Date();
 };//end class
 
+///Init static
 short SimGpsIntData::_active_row = 0;
 
 
-SimGpsIntData::SimGpsIntData(const char *ident,
+//! Definition class SimGpsIntData
+SimGpsIntData::SimGpsIntData(const char  *ident,
                              const int &Page, //Zugehörigkeits Modus
-                             const int &Row,
-                             const int &Pos,
-                             const int &CModeMax, //max Einstell Pos
-                             const int &LowLimit, //für Parts
-                             const int &UpLimit, //für Parts
+                             const int   &Row,
+                             const int   &Pos,
+                             const int   &CModeMax,         //max Einstell Pos
+                             const int   &LowLimit,         //für Parts
+                             const int   &UpLimit,          //für Parts
                              const float &Faktor,
-                             const bool &Jump, //Überspringen an Grenzwerten
-                             const int &NKSt,
+                             const bool  &Jump,             //Überspringen an Grenzwerten
+                             const int   &NKSt,
                              const bool *hasPowerFlag
                              ) : SimGpsBase(NKSt, hasPowerFlag),
     _page(Page),
@@ -64,12 +68,16 @@ SimGpsIntData::SimGpsIntData(const char *ident,
     _drInt.assign((const _XpRefStr_ *) ident);
 }
 
+//! Definition Methode _setup
 void SimGpsIntData::_setup(void) {}
 
+//! Definition Methode _update
 void SimGpsIntData::_update(bool updateOutput){
 
+    /// Ist der intern gesetzte Mode gleich dem aktiven Mode
     if (_page == _active_mode){
 
+       //!Gps_Mode: Destination type anzeigen
         if (_page == 0 & _row == 0){ //
             switch (_drInt) {
             case 1: _gpsD = "Airport "; break;
@@ -79,10 +87,13 @@ void SimGpsIntData::_update(bool updateOutput){
             case 12: _gpsD = "VOR "; break;
             default: _gpsD = "Unknown "; break; } }
 
+       //!Efis_Mode:
         if (_page == 1){
 
+           //!Range anzeige
             if (_row == 0){
 
+               //!Wenn Row aktiv, Encoder abfragen
                 if (_row == _active_row){
                     if(myGps1Enc._diff){
                         change_Date();
@@ -92,6 +103,7 @@ void SimGpsIntData::_update(bool updateOutput){
                 }// end if _row == _active_row
             }// end if _row == 0
 
+           //!Efis Darstellungsmodes:
             if (_row == 1){
                 switch (_drInt) {
                 case 0: _gpsD = "APP"; break;
@@ -103,6 +115,7 @@ void SimGpsIntData::_update(bool updateOutput){
                 }//end switch
             }//end if row == 1
 
+           //!Symbolauswahl in Efis
             if (_row == 3){
                 if(_drInt){_gpsD = "%";}
                 else{_gpsD = " ";}
@@ -118,8 +131,10 @@ void SimGpsIntData::_update(bool updateOutput){
     }//end if _page == _activemode
 }//end void
 
+//! Definition Methode _updateActive
 void SimGpsIntData::_updateActive(){}
 
+//! Definition Method change_Date
 void SimGpsIntData::change_Date() {
     _drInt = _drInt + (myGps1Enc._diff * pow(10, myGps1EncSw._Cmode_set + 1) * _faktor);
 
@@ -134,11 +149,13 @@ void SimGpsIntData::change_Date() {
 } //end void
 
 
+//! Definition Methode _print_lcd
 void SimGpsIntData::print_Lcd(){
     if (_print) {
         _print = false;
         blink::_blink = true ;
 
+        /// -> Lcd
         // Lcd2.setCursor (9, _row);
         // Lcd2.print(" ");
         Lcd2.setCursor (_pos, _row); //15 - _gpsD.length()

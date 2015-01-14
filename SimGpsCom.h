@@ -3,43 +3,45 @@
 
 #include "SimGpsBase.h"
 
+//! Deklaration class SimGpsComData
 class SimGpsComData : public SimGpsBase {
 
-public:
-    SimGpsComData(const char *ident,
-                  const int &Mode, //Zugehörigkeits Modus
-                  const int &Row = 0,
-                  const int &CModeMax = 1, //max Einstell Pos
-                  const int &LowLimit = 0, //für Parts
-                  const int &UpLimit = 9, //für Parts
-                  const float &Faktor = 1, //für NKSt
-                  const bool &Jump = true, //Überspringen an Grenzwerten
-                  const int &NKSt = 0,
-                  const bool *hasPowerFlag = &SimObject::hasPower);
+    public:
+        SimGpsComData(const char  *ident,
+                      const int   &Mode,             //Zugehörigkeits Modus
+                      const int   &Row = 0,
+                      const int   &CModeMax = 1,         //max Einstell Pos
+                      const int   &LowLimit = 0,     //für Parts
+                      const int   &UpLimit = 9,      //für Parts
+                      const float &Faktor = 1,         //für NKSt
+                      const bool  &Jump = true,       //Überspringen an Grenzwerten
+                      const int   &NKSt = 0,
+                      const bool *hasPowerFlag = &SimObject::hasPower);
 
-    FlightSimCommand _drCom;
-    short _changemode; //Pos der aktuellen Änderung
-    int _cmodemax;
+        FlightSimCommand _drCom;
+        short _changemode;          //Pos der aktuellen Änderung
+        int _cmodemax;
 
-protected:
-    String _gpsD;
-private:
-    int i, _mode, _row, _lower, _upper, _jump;
-    float _faktor;
-    void _update(bool updateOutput);
-    void _updateActive(); };
+    protected:
+        String _gpsD;
+    private:
+        int  i, _mode, _row, _lower, _upper, _jump;
+        float _faktor;
+        void _update(bool updateOutput);
+        void _updateActive(); };
 
-SimGpsComData::SimGpsComData(const char *ident,
-                             const int &Mode, //Zugehörigkeits Modus
-                             const int &Row,
-                             const int &CModeMax, //max Einstell Pos
-                             const int &LowLimit, //für Parts
-                             const int &UpLimit, //für Parts
+//! Definition class----------------------------------------------------------
+SimGpsComData::SimGpsComData(const char  *ident,
+                             const int   &Mode,             //Zugehörigkeits Modus
+                             const int   &Row,
+                             const int   &CModeMax,         //max Einstell Pos
+                             const int   &LowLimit,         //für Parts
+                             const int   &UpLimit,          //für Parts
                              const float &Faktor,
-                             const bool &Jump, //Überspringen an Grenzwerten
-                             const int &NKSt,
+                             const bool  &Jump,             //Überspringen an Grenzwerten
+                             const int   &NKSt,
                              const bool *hasPowerFlag
-                             ) : SimGpsBase(NKSt, hasPowerFlag),
+                            ) : SimGpsBase(NKSt, hasPowerFlag),
     _cmodemax(CModeMax),
     _mode(Mode),
     _row(Row),
@@ -51,48 +53,51 @@ SimGpsComData::SimGpsComData(const char *ident,
     _drCom.assign((const _XpRefStr_ *)ident);
 }
 
+//! Definition Methode _update
 void SimGpsComData::_update(bool updateOutput) {} //end void
 
+//! Definition Methode _updateActive
 void SimGpsComData::_updateActive() {}
 
 
+//! GPS Commands
 DataRefIdent gpsSignComIdent[][58] = {
-    // "sim/FMS/key_0",
-    // "sim/FMS/key_1",
-    // "sim/FMS/key_2",
-    // "sim/FMS/key_3",
-    // "sim/FMS/key_4",
-    // "sim/FMS/key_5",
-    // "sim/FMS/key_6",
-    // "sim/FMS/key_7",
-    // "sim/FMS/key_8",
-    // "sim/FMS/key_9",
-    // "sim/FMS/key_A",
-    // "sim/FMS/key_B",
-    // "sim/FMS/key_C",
-    // "sim/FMS/key_D",
-    // "sim/FMS/key_E",
-    // "sim/FMS/key_F",
-    // "sim/FMS/key_G",
-    // "sim/FMS/key_H",
-    // "sim/FMS/key_I",
-    // "sim/FMS/key_J",
-    // "sim/FMS/key_K",
-    // "sim/FMS/key_L",
-    // "sim/FMS/key_M",
-    // "sim/FMS/key_N",
-    // "sim/FMS/key_O",
-    // "sim/FMS/key_P",
-    // "sim/FMS/key_Q",
-    // "sim/FMS/key_R",
-    // "sim/FMS/key_S",
-    // "sim/FMS/key_T",
-    // "sim/FMS/key_U",
-    // "sim/FMS/key_V",
-    // "sim/FMS/key_W",
-    // "sim/FMS/key_X",
-    // "sim/FMS/key_Y",
-    // "sim/FMS/key_Z"
+//    "sim/FMS/key_0",
+//    "sim/FMS/key_1",
+//    "sim/FMS/key_2",
+//    "sim/FMS/key_3",
+//    "sim/FMS/key_4",
+//    "sim/FMS/key_5",
+//    "sim/FMS/key_6",
+//    "sim/FMS/key_7",
+//    "sim/FMS/key_8",
+//    "sim/FMS/key_9",
+//    "sim/FMS/key_A",
+//    "sim/FMS/key_B",
+//    "sim/FMS/key_C",
+//    "sim/FMS/key_D",
+//    "sim/FMS/key_E",
+//    "sim/FMS/key_F",
+//    "sim/FMS/key_G",
+//    "sim/FMS/key_H",
+//    "sim/FMS/key_I",
+//    "sim/FMS/key_J",
+//    "sim/FMS/key_K",
+//    "sim/FMS/key_L",
+//    "sim/FMS/key_M",
+//    "sim/FMS/key_N",
+//    "sim/FMS/key_O",
+//    "sim/FMS/key_P",
+//    "sim/FMS/key_Q",
+//    "sim/FMS/key_R",
+//    "sim/FMS/key_S",
+//    "sim/FMS/key_T",
+//    "sim/FMS/key_U",
+//    "sim/FMS/key_V",
+//    "sim/FMS/key_W",
+//    "sim/FMS/key_X",
+//    "sim/FMS/key_Y",
+//    "sim/FMS/key_Z"
 };
 
 SimGpsBase *gpsSignCom[] = {
@@ -135,12 +140,12 @@ SimGpsBase *gpsSignCom[] = {
     new SimGpsComData(gpsSignComIdent[36], 0) };
 
 DataRefIdent gpsMoveComIdent[][58] = {
-    // "sim/FMS/type_apt",
-    // "sim/FMS/type_vor",
-    // "sim/FMS/type_ndb",
-    // "sim/FMS/type_fix",
-    // "sim/FMS/fix_next",
-    // "sim/FMS/fix_prev"
+//    "sim/FMS/type_apt",
+//    "sim/FMS/type_vor",
+//    "sim/FMS/type_ndb",
+//    "sim/FMS/type_fix",
+//    "sim/FMS/fix_next",
+//    "sim/FMS/fix_prev"
 };
 
 SimGpsBase *gpsMoveCom[] = {
