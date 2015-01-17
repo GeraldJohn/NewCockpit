@@ -176,13 +176,22 @@ SimSwitchLocal::SimSwitchLocal(const int  &swNr,
 void SimSwitchLocal::_update(bool updateOutput) {
     if (updateOutput){
 
-        /// Existiert für das Object(sw_nr, reg_nr) ein changedBit
+        /// Existiert für das Object(sw_nr, reg_nr) ein changedBit, dh. Taster/Schalter betätigt
         if (HardSwitch::changedBit[_reg_nr] & (1 << _sw_nr)){
 
-            /// Ist für das Object(sw_nr, reg_nr) die _sw_nr des sw_byte true
+            /// recall Taster wurde geändert
+            // HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)
+            //if (_reg_nr == 2 && _sw_nr == 6) {
+                masterCaution.setMasterRecall(!HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr));
+                blink::_blink = true;
+            //}//endif reg 2 sw 6
+
+
+            /// Ist für das Object(sw_nr, reg_nr) die _sw_nr des sw_byte true, dh. Taster/Schalter auf on
             if ((HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr)) == (1 << _sw_nr)){
 
-                ///  Ist die _reg_nr des Objects == 3: => Radio Rotary Switch
+                ///  Ist die _reg_nr des Objects == 3: => Radio Rotary Switch wurde betätigt
+                /// _mode auf Wert von _if_true gesetzt
                 if (_reg_nr == 3){
 
                     /// Setze die jeweilige Frequenz und StanbyFrequenz auf active
@@ -206,6 +215,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
 
                 /// _reg_nr == 9: Autopilot Rotary Switch
+                /// _mode auf Wert von _if_true gesetzt
                 if (_reg_nr == 9) {
 
                     /// Setze die eingestellte Frequenz und StanbyFrequenz auf active
@@ -225,7 +235,8 @@ void SimSwitchLocal::_update(bool updateOutput) {
                     SimApData::_print = true;
                 } //endif reg_nr == 9
 
-                /// _reg_nr == 4: GPS Rotary Switch::_mode => _if_true;
+                /// _reg_nr == 4: GPS Rotary Switch
+                /// _mode auf Wert von _if_true gesetzt
                 if (_reg_nr == 4) {
 
                     /// Setze die jeweilige Einheit auf active
@@ -254,41 +265,29 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
 
 
-                /// Swap Taster wurde true
+                /// Swap Taster wurde geändert und true
                 if (_reg_nr == 2 && _sw_nr == 5){
-                    //_switched_old = _switched;
-                    //_switched = 1;
                     if(SimRadioData::_modeSet < 6){
-                        //  if(_switched > _switched_old){
                         SimStbyRadioData::_swap = true;
                         blink::_blink = true;
 
-                        /// Setze Flag für Lcd print
-                        //SimStbyRadioData::_print = true;
-                        //SimRadioData::_print = true;
-
                         /// Setze _CMode_set auf -1 => CMode_set = CModeMax
                         myRadioEncSw._Cmode_set = -1;
-                        //}
-                        //else { SimStbyRadioData::_swap = false;
-                        //}
+
                     }//endif modeset
+                    //! im ATC Modus soll der Swap Taster die Transponder id starten
+                    else if (SimRadioData::_modeSet == 6){
+                       // SimSwitchCom::sw_radio[0]._drCom = 1;
+                    }
                 }//endif reg 2 sw 5
 
-                /// reset Taster wurde true
+                /// reset Taster wurde geändert und true
                 if (_reg_nr == 2 && _sw_nr == 7) {
                     //if (HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)){
                     masterCaution.reset();
                     blink::_blink = true;
                     //}
                 }//endif re 2 sw 7
-
-                /// recall Taster wurde true
-                // (!HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)
-                if (_reg_nr == 2 && _sw_nr == 6) {
-                    masterCaution.setRecall(1);
-                    blink::_blink = true;
-                }//endif reg 2 sw 6
 
             }//endif sw_byte
         }// end if changedBit

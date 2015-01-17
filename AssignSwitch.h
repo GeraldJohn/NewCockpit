@@ -120,7 +120,7 @@ SimSwitchBase *sw_ap[] = {
     new SimSwitchCom(2, 8, sw_apIdent[8], true) };
 
 DataRefIdent sw_radioIdent[][58] = {
-    "sim/transponder/transponder_ident",
+    "sim/cockpit2radios/indicators/transponder_id",
     "sim/cockpit2/radios/actuators/transponder_mode",
     "sim/audio_panel/select_audio_com1",
     "sim/audio_panel/select_audio_com2",

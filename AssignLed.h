@@ -67,11 +67,11 @@ SimLEDBase *r6Anncs[] = {
     new SimLEDIntDR(-1, -1, r6Ident[0])
 };
 
-
+/*
 //! 6 Cautions LEDs rot vlnr + 1 Master caution
 /// FlightSimInteger caution[7];
 
-DataRefIdent cautionIdent[][58] = {
+ DataRefIdent cautionIdent[][58] = {
     "sim/cockpit/electrical/gpu_on",
     "sim/cockpit2/annunciators/oil_pressure",
     "sim/cockpit2/annunciators/oil_temperature",
@@ -80,19 +80,20 @@ DataRefIdent cautionIdent[][58] = {
 
 //                     ledNr, regNr, *ident,low, high, invert, enableTest, *hasPowerFlag
 SimLEDBase *caution[] = {
-    /* new SimLEDIntDR(0, 2, cautionIdent[0]),
+    new SimLEDIntDR(0, 2, cautionIdent[0]),
       new SimLEDIntDR(1, 2, cautionIdent[1]),
       new SimLEDIntDR(2, 2, cautionIdent[2]),
       new SimLEDIntDR(3, 2, cautionIdent[3]),
       new SimLEDIntDR(4, 2, cautionIdent[4]),
       new SimLEDIntDR(5, 2, cautionIdent[5]),
-      new SimLEDIntDR(6, 0, cautionIdent[6]),//master caution */
+      new SimLEDIntDR(6, 0, cautionIdent[6]),//master caution
 };
+*/
 
-//! 6 Warnungen LEDs gelb vlnr
+//! 6 Warnungs LEDs gelb vlnr
 //FlightSimInteger warning[6];
 DataRefIdent warningIdent[][58] = {
-//  "sim/567890123456789012345678901234567890123456789012345678"
+/// "sim/567890123456789012345678901234567890123456789012345678"
     "sim/cockpit2/annunciators/gear_warning",
     "sim/cockpit/warnings/annunciators/generator_off[0]",
     "sim/cockpit/warnings/annunciators/generator_off[1]",

@@ -75,6 +75,6 @@ void loop() {
     //if (reset.fallingEdge()) masterCaution.reset();
 
     // set/remove Recall mode on all SystemAnncs belonging to MasterCaution
-    //masterCaution.setRecall(!recall.read());
+    //masterCaution.setMasterRecall(!recall.read());
 
 }

@@ -42,7 +42,7 @@ public:
                 const int    &regNr,
                 SimLEDBase   *subAnncList[],        //Pointer auf Array von Sim Objekten je SystemAnnc Led
                 const size_t sizeof_subAnncList,    //Anzahl der Objekte
-                const bool   &enableTest   = false,
+                const bool   &enableTest   = true,
                 const bool   *hasPowerFlag = &SimObject::hasPower )
         : SimLEDBase(ledNr, regNr, enableTest, hasPowerFlag)
     {
@@ -68,7 +68,7 @@ private:
     bool _subAck[MAX_ANNCS_PER_SA];
 
     //! Recall mode lights the output regardless of subannc state
-    //! Flag des RecallModes, der Led anschaltet unabhängig ihres Status
+    //! Flag des RecallModes, der Led anschaltet unabhängig ihres subannc Status
     bool _recallMode;
 
     //! True if any subanncs are active, regardless of ack'd status
@@ -106,8 +106,8 @@ private:
     void _reset() { _active = false; }
 
     //! Set recall mode on/off
-    //! Deklaration und Definition Methode _setRecall
-    void _setRecall(bool mode) {
+    //! Deklaration und Definition Methode _setSubRecall
+    void _setSubRecall(bool mode) {
         // if we are starting recall mode
         if (mode && !_recallMode) {
             _recallMode = true;
@@ -171,9 +171,9 @@ public:
     }
 
     //! Set Recall mode for all System Annunciators linked with this object
-    void setRecall(bool mode) {
+    void setMasterRecall(bool mode) {
         for (int i = 0; i < _sysAnncCount; ++i) {
-            _sysAnncs[i]->_setRecall(mode);
+            _sysAnncs[i]->_setSubRecall(mode);
         }
     }
 
