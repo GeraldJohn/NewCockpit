@@ -52,11 +52,13 @@ void loop() {
 
 
 
-
     /*
-  Lcd2.setCursor (0, 0);
-  Lcd2.print("_autopD: ");
-  Lcd2.print(SimApData::_autopD);
+
+
+  Lcd2.setCursor (1, 3);
+  Lcd2.print("ledbyte ");
+  Lcd2.print(SimLEDBase::_led_byte[0]);
+
   Lcd2.setCursor (0, 1);
   Lcd2.print("_autopD_old ");
   Lcd2.print(SimApData::_autopD_old);

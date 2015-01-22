@@ -3,14 +3,24 @@
 
 #include "SimGpsInt.h"
 
-DataRefIdent gpsIdIdent[][58] = {"sim/cockpit/gps/destination_type"};
+DataRefIdent gpsIdIdent[][58] = {
+    "sim/cockpit/gps/destination_type"    /*,
+    "sim/cockpit2/radios/indicators/gps_nav_id[0]",    //alle Modes 1 - 4
+    "sim/cockpit2/radios/indicators/gps_nav_id[1]",
+    "sim/cockpit2/radios/indicators/gps_nav_id[2]",
+    "sim/cockpit2/radios/indicators/gps_nav_id[3]"  */
+};
 
-// "sim/cockpit2/radios/indicators/gps_nav_id[0]", //alle Modes 1 - 4
-// "sim/cockpit2/radios/indicators/gps_nav_id[1]",
-// "sim/cockpit2/radios/indicators/gps_nav_id[2]",
-// "sim/cockpit2/radios/indicators/gps_nav_id[3]"
+//SimGpsIntData(ident, Page, Row, Pos, CModeMax, Low, Up, Faktor, Jump, NKSt = 0, *hasPowerFlag
+SimGpsBase *gpsIdData[] = {
+    new SimGpsIntData(gpsIdIdent[0], 0, 0, 0)  /*,
+    new SimGpsIntData(gpsIdIdent[1], 0, 0, 9),
+    new SimGpsIntData(gpsIdIdent[2], 0, 0, 10),
+    new SimGpsIntData(gpsIdIdent[3], 0, 0, 11),
+    new SimGpsIntData(gpsIdIdent[4], 0, 0, 12)*/
+};
 
-SimGpsBase *gpsIdData[] = {new SimGpsIntData(gpsIdIdent[0], 0, 0, 0)};
+
 
 // new SimGpsIntData(gpsIdIdent[1], 0, 1), //! Efis Anzeige_elemente
 // new SimGpsIntData(gpsIdIdent[2], 0, 2),
@@ -44,6 +54,7 @@ DataRefIdent efisIdent[][58] = {
   "sim/cockpit2/EFIS/EFIS_page[5]" //An array of EFIS page switches for selecting which EFIS page is visible.
   */
 
+//SimGpsIntData(ident, Page, Row, Pos, CModeMax, Low, Up, Faktor, Jump, NKSt = 0, *hasPowerFlag
 SimGpsBase *gpsEfisData[] = {
     new SimGpsIntData(efisIdent[0], 1, 0, 9, 1, 0, 6, 1, false),
     new SimGpsIntData(efisIdent[1], 1, 1, 9, 1, 0, 4, 1, false),

@@ -38,7 +38,7 @@ HardLed Led;
 void HardLed::_setup(){
     pinMode(HardLed::latchPin, OUTPUT);
     pinMode(HardLed::clockPin, OUTPUT);
-    pinMode(HardLed::dataPin, OUTPUT);
+    pinMode(HardLed::dataPin,  OUTPUT);
 }
 
 //! Definition Methode _update
@@ -49,6 +49,11 @@ void HardLed::_update(){
 
     for(int i = 5; i >= 0; i--){
         _shiftOut(SimLEDBase::_led_byte[i]);
+
+        ///Led_Data String wird gesetzt zur Kontrollanzeige im GpsLocal
+        SimLEDBase::led_byte_D[i] = String(SimLEDBase::_led_byte[i] , BIN);
+        while (SimLEDBase::led_byte_D[i].length() < 8){SimLEDBase::led_byte_D[i] = "0" + SimLEDBase::led_byte_D[i];}
+
         SimLEDBase::_led_byte[i] = 0;
     }
 

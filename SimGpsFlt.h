@@ -66,7 +66,7 @@ SimGpsFltData::SimGpsFltData(const char  *ident,
 void SimGpsFltData::_update(bool updateOutput){
 
     /// Ist der intern gesetzte Mode gleich dem aktiven Mode
-    if (_mode == _active_mode){
+    if (_mode == _active_page){
         _gpsD_old = _gpsD;
 
         _gpsD = String(_drFlt);       //Print String erzeugen

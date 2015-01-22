@@ -25,7 +25,7 @@ class SimApData : public SimData {
         FlightSimFloat _drFlt;
         short _changemode;          //Pos der aktuellen Änderung
         int _cmodemax;
-        static int _active_mode;         //aktuell gewählter Modus
+        static int _active_page;         //aktuell gewählter Modus
         static bool _print;
         static const String autopH[16];
         String _autopD;
@@ -46,7 +46,7 @@ class SimApData : public SimData {
         void change_Date(); };
 
 //!Initialisierung static
-int SimApData::_active_mode = 0;
+int SimApData::_active_page = 0;
 bool SimApData::_print = true;
 
 /*enum AP_Mode {
@@ -113,7 +113,7 @@ void SimApData::_setup(void) {
 //! Definition Methode _update
 void SimApData::_update(bool updateOutput) {
     /// Ist der intern gesetzte Mode gleich dem aktiven Mode
-    if (_mode == _active_mode) {
+    if (_mode == _active_page) {
         _autopD_old = _autopD;
         /// ApEncSw unter Null wird auf CModeMax gesetzt
         myApEncSw._Cmode_set < 0 ? myApEncSw._Cmode_set = _cmodemax : 0;
@@ -129,7 +129,7 @@ void SimApData::_update(bool updateOutput) {
             _print = true; }
 
         print_Lcd();                        //Ausdruck starten
-    } //end if _mode == _active_mode
+    } //end if _mode == _active_page
 } //end void
 
 

@@ -54,6 +54,7 @@ public:
 
     //! benötigt damit MasterCaution unsere _reset function aufrufen kann
     friend class MasterCaution;
+    bool _recallMode;
 
 private:
     //! Pointer to array of SimLED sub-annunciators
@@ -69,24 +70,25 @@ private:
 
     //! Recall mode lights the output regardless of subannc state
     //! Flag des RecallModes, der Led anschaltet unabhängig ihres subannc Status
-    bool _recallMode;
+   // bool _recallMode;
 
     //! True if any subanncs are active, regardless of ack'd status
-    //! True wenn ein Sub Annunc aktiv ist unabhängig vom Acknowleged Status
+    //! True wenn ein Sub Annunc aktiv ist, unabhängig vom Acknowleged Status
     bool _hasActive;
 
     //! Deklaration und Definition Methode _updateActive
     void _updateActive() {
+
         //! Test auf Recall Mode, wenn true
         //! return: Beendigung der Methode ohne Berücksichtigung des Rests
         if (_recallMode) {
             _active = true;
-            return;
-        }
+            return;        }
+
         //! Tests der jeweiligen Sim Objekte und setzen des _hasActive Flags
         _hasActive = false;
         for (int i = 0; i < _subAnncCount; ++i) {
-            if(_subAnncsList[i]->isActive()) {  //return des _active Flags des Sim Objectes
+            if(_subAnncsList[i]->isActive() ) {  //return des _active Flags des Sim Objectes
                 _hasActive = true;              //setzen des _hasActive Flags des SystemAnncs
 
                 //!Wenn noch nicht acknowleged, dann system Annc._active
@@ -95,10 +97,11 @@ private:
                     _active = true;
                     _subAck[i] = true;
                 }
-            } else {
-                _subAck[i] = false;
             }
-        }
+            else { //wenn isActive() false ergibt
+                _subAck[i] = false;
+            }//end else
+        }//end for
     } //end _updateActive()
 
     //! Deactivates subAnnc. Called by MasterCaution.
@@ -108,14 +111,14 @@ private:
     //! Set recall mode on/off
     //! Deklaration und Definition Methode _setSubRecall
     void _setSubRecall(bool mode) {
-        // if we are starting recall mode
+        /// if we are starting recall mode
         if (mode && !_recallMode) {
             _recallMode = true;
         }
 
-        // if we are ending Recall mode
+        /// if we are ending Recall mode
         if (!mode && _recallMode) {
-            // clear all acknowledgements
+            /// clear all acknowledgements
             for (int i = 0; i < _subAnncCount; ++i) {
                 _subAck[i] = false;
             }
@@ -195,7 +198,7 @@ private:
     } //_updateActive
 
 
-};
+}; //end class
 
-} //namespace b737SysAnnc
+} //end namespace b737SysAnnc
 #endif // SYSTEMANNC_H

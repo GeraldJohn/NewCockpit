@@ -11,7 +11,7 @@ once Befehl
 GPS LCD Seiten für sw regbyte und led bts Anzeigen einrichten!!!!!
 .print nur bei Änderung
 
-
+sim/...gps_nav_id ist vom Format byte[500] => kein FlightsimInt
 
 Ändern:
 Werte nach FlightSim.isEnabled aktualisieren? und anzeigen

@@ -11,7 +11,7 @@ class SimGpsIntData : public SimGpsBase {
 
 public:
     SimGpsIntData(const char  *ident,
-                  const int &Page, //Zugehörigkeits Modus
+                  const int   &Page, //Zugehörigkeits Modus
                   const int   &Row = 0,
                   const int   &Pos = 9,
                   const int   &CModeMax = 1,         //max Einstell Pos
@@ -45,7 +45,7 @@ short SimGpsIntData::_active_row = 0;
 
 //! Definition class SimGpsIntData
 SimGpsIntData::SimGpsIntData(const char  *ident,
-                             const int &Page, //Zugehörigkeits Modus
+                             const int   &Page,             //zugehörige Seite
                              const int   &Row,
                              const int   &Pos,
                              const int   &CModeMax,         //max Einstell Pos
@@ -74,23 +74,24 @@ void SimGpsIntData::_setup(void) {}
 //! Definition Methode _update
 void SimGpsIntData::_update(bool updateOutput){
 
-    /// Ist der intern gesetzte Mode gleich dem aktiven Mode
-    if (_page == _active_mode){
+    /// Ist die zugehörige Seite gleich dem aktiven Seite
+    if (_page == _active_page){
 
        //!Gps_Mode: Destination type anzeigen
         if (_page == 0 & _row == 0){ //
             switch (_drInt) {
-            case 1: _gpsD = "Airport "; break;
-            case 2: _gpsD = "NDB "; break;
-            case 4: _gpsD = "VOR "; break;
-            case 11: _gpsD = "Fix "; break;
-            case 12: _gpsD = "VOR "; break;
+            case 1 : _gpsD = "Airport "; break;
+            case 2 : _gpsD = "NDB     "; break;
+            case 4 : _gpsD = "VOR     "; break;
+            case 5 : _gpsD = "LOC     "; break;
+            case 11: _gpsD = "Fix     "; break;
+            case 12: _gpsD = "VOR     "; break;
             default: _gpsD = "Unknown "; break; } }
 
        //!Efis_Mode:
         if (_page == 1){
 
-           //!Range anzeige
+           //!Range Anzeige
             if (_row == 0){
 
                //!Wenn Row aktiv, Encoder abfragen

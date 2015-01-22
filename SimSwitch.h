@@ -180,11 +180,15 @@ void SimSwitchLocal::_update(bool updateOutput) {
         if (HardSwitch::changedBit[_reg_nr] & (1 << _sw_nr)){
 
             /// recall Taster wurde geändert
-            // HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)
-            //if (_reg_nr == 2 && _sw_nr == 6) {
-                masterCaution.setMasterRecall(!HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr));
+            if(HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)){
+                masterCaution.setMasterRecall(true);
                 blink::_blink = true;
-            //}//endif reg 2 sw 6
+            }
+            else {
+                masterCaution.setMasterRecall(false);
+                blink::_blink = true;
+            }
+
 
 
             /// Ist für das Object(sw_nr, reg_nr) die _sw_nr des sw_byte true, dh. Taster/Schalter auf on
@@ -219,7 +223,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
                 if (_reg_nr == 9) {
 
                     /// Setze die eingestellte Frequenz und StanbyFrequenz auf active
-                    SimApData::_active_mode = _if_true;
+                    SimApData::_active_page = _if_true;
 
                     /// Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myApEncSw._Cmode_set = -1;
@@ -227,9 +231,9 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
                     /// -> Lcd
                     Lcd1.setCursor (0, 0);
-                    Lcd1.print(SimApData::autopH[SimApData::_active_mode * 2]);   //"Alt " etc
+                    Lcd1.print(SimApData::autopH[SimApData::_active_page * 2]);   //"Alt " etc
                     Lcd1.setCursor (0, 1);
-                    Lcd1.print(SimApData::autopH[SimApData::_active_mode * 2 + 1]);    //"Standby  .  "
+                    Lcd1.print(SimApData::autopH[SimApData::_active_page * 2 + 1]);    //"Standby  .  "
 
                     /// Setze Flag für Lcd print
                     SimApData::_print = true;
@@ -240,10 +244,10 @@ void SimSwitchLocal::_update(bool updateOutput) {
                 if (_reg_nr == 4) {
 
                     /// Setze die jeweilige Einheit auf active
-                    SimGpsIntData::_active_mode = _if_true;
-                    SimGpsFltData::_active_mode = _if_true;
-                    SimGpsComData::_active_mode = _if_true;
-                    SimGpsLocal::  _active_mode = _if_true;
+                    SimGpsIntData::_active_page = _if_true;
+                    SimGpsFltData::_active_page = _if_true;
+                    SimGpsComData::_active_page = _if_true;
+                    SimGpsLocal::  _active_page = _if_true;
 
                     /// Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myGps1EncSw._Cmode_set = -1;
@@ -251,13 +255,13 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
                     /// -> Lcd
                     Lcd2.setCursor (0, 0);
-                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_mode * 4]);   //"Airport " etc
+                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_page * 4]);   //"Airport " etc
                     Lcd2.setCursor (0, 1);
-                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_mode * 4 + 1]);    //"Direct:"
+                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_page * 4 + 1]);    //"Direct:"
                     Lcd2.setCursor (0, 2);
-                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_mode * 4 + 2]);   //"Dist: " etc
+                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_page * 4 + 2]);   //"Dist: " etc
                     Lcd2.setCursor (0, 3);
-                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_mode * 4 + 3]);    //"Time:  .  "
+                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_page * 4 + 3]);    //"Time:  .  "
 
                     /// Setze Flag für Lcd print
                     SimGpsIntData::_print = true;

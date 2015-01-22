@@ -11,7 +11,7 @@ public:
             const int &NKSt = 0,
             const bool *hasPowerFlag = &SimObject::hasPower);
 
-    static int _active_mode;         //aktuell gewählter Modus
+    static int _active_page;         //aktuell gewählter Modus
     static bool _print;
     static const String gpsH[32];
 private:
@@ -22,7 +22,7 @@ private:
 
 
 //!Initialisierung static
-int SimGpsBase::_active_mode = 0;
+int SimGpsBase::_active_page = 0;
 bool SimGpsBase::_print = true;
 
 /// Definition String Array gpsH[32]
@@ -52,12 +52,12 @@ const String SimGpsBase::gpsH[32] = {
     " :                  ",
     " :                  ",
 
-    "0 1 2 sw_reg 3 4    ", //6
+    "0 1 2 sw_reg 3 4 5  ", //6
     "                    ",
     "                    ",
     "                    ",
 
-    "5 6 7 sw_reg 8 9    ", //7
+    "4 5 6 sw_reg 7 8 9  ", //7
     "                    ",
     "                    ",
     "                    ",

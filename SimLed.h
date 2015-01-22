@@ -25,6 +25,7 @@ public:
     static void lightTest(bool lightAll) {_testAll = lightAll;}
 
     static byte _led_byte[6];
+    static String led_byte_D[6];
     static bool _testAll; //vorher private:
 
 protected:
@@ -53,6 +54,7 @@ private:
 //! Initialise static data members = Definition
 bool SimLEDBase::_testAll = false;
 byte SimLEDBase::_led_byte[6];
+String SimLEDBase::led_byte_D[6];
 
 //! Definition class SimLEDBase
 SimLEDBase::SimLEDBase(const int &ledNr,
