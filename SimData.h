@@ -18,6 +18,7 @@ public:
 private:
     void _setup (void) {}
     void _update(bool updateOutput = true);
+
     virtual void _updateActive() = 0;
 
 protected:
@@ -43,10 +44,7 @@ FlightSimInteger SimData::date2;
 void SimData::_update(bool updateOutput){
 
     _updateActive();
-
 }
-
-
 //! Definition Methode swap_Date
 void SimData::swap_Date (FlightSimInteger &date1, FlightSimInteger &date2){
 

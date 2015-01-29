@@ -100,44 +100,44 @@ DataRefIdent gpsSignComIdent[][58] = {
 //    "sim/FMS/key_Z"
 };
 
-SimGpsBase *gpsSignCom[] = {
-    new SimGpsComData(gpsSignComIdent[0], 0),
-    new SimGpsComData(gpsSignComIdent[1], 0),
-    new SimGpsComData(gpsSignComIdent[2], 0),
-    new SimGpsComData(gpsSignComIdent[3], 0),
-    new SimGpsComData(gpsSignComIdent[4], 0),
-    new SimGpsComData(gpsSignComIdent[5], 0),
-    new SimGpsComData(gpsSignComIdent[6], 0),
-    new SimGpsComData(gpsSignComIdent[7], 0),
-    new SimGpsComData(gpsSignComIdent[8], 0),
-    new SimGpsComData(gpsSignComIdent[9], 0),
-    new SimGpsComData(gpsSignComIdent[10], 0),
-    new SimGpsComData(gpsSignComIdent[11], 0),
-    new SimGpsComData(gpsSignComIdent[12], 0),
-    new SimGpsComData(gpsSignComIdent[13], 0),
-    new SimGpsComData(gpsSignComIdent[14], 0),
-    new SimGpsComData(gpsSignComIdent[15], 0),
-    new SimGpsComData(gpsSignComIdent[16], 0),
-    new SimGpsComData(gpsSignComIdent[17], 0),
-    new SimGpsComData(gpsSignComIdent[18], 0),
-    new SimGpsComData(gpsSignComIdent[19], 0),
-    new SimGpsComData(gpsSignComIdent[20], 0),
-    new SimGpsComData(gpsSignComIdent[21], 0),
-    new SimGpsComData(gpsSignComIdent[22], 0),
-    new SimGpsComData(gpsSignComIdent[23], 0),
-    new SimGpsComData(gpsSignComIdent[24], 0),
-    new SimGpsComData(gpsSignComIdent[25], 0),
-    new SimGpsComData(gpsSignComIdent[26], 0),
-    new SimGpsComData(gpsSignComIdent[27], 0),
-    new SimGpsComData(gpsSignComIdent[28], 0),
-    new SimGpsComData(gpsSignComIdent[29], 0),
-    new SimGpsComData(gpsSignComIdent[30], 0),
-    new SimGpsComData(gpsSignComIdent[31], 0),
-    new SimGpsComData(gpsSignComIdent[32], 0),
-    new SimGpsComData(gpsSignComIdent[33], 0),
-    new SimGpsComData(gpsSignComIdent[34], 0),
-    new SimGpsComData(gpsSignComIdent[35], 0),
-    new SimGpsComData(gpsSignComIdent[36], 0) };
+//SimGpsBase *gpsSignCom[] = {
+//    new SimGpsComData(gpsSignComIdent[0], 0),
+//    new SimGpsComData(gpsSignComIdent[1], 0),
+//    new SimGpsComData(gpsSignComIdent[2], 0),
+//    new SimGpsComData(gpsSignComIdent[3], 0),
+//    new SimGpsComData(gpsSignComIdent[4], 0),
+//    new SimGpsComData(gpsSignComIdent[5], 0),
+//    new SimGpsComData(gpsSignComIdent[6], 0),
+//    new SimGpsComData(gpsSignComIdent[7], 0),
+//    new SimGpsComData(gpsSignComIdent[8], 0),
+//    new SimGpsComData(gpsSignComIdent[9], 0),
+//    new SimGpsComData(gpsSignComIdent[10], 0),
+//    new SimGpsComData(gpsSignComIdent[11], 0),
+//    new SimGpsComData(gpsSignComIdent[12], 0),
+//    new SimGpsComData(gpsSignComIdent[13], 0),
+//    new SimGpsComData(gpsSignComIdent[14], 0),
+//    new SimGpsComData(gpsSignComIdent[15], 0),
+//    new SimGpsComData(gpsSignComIdent[16], 0),
+//    new SimGpsComData(gpsSignComIdent[17], 0),
+//    new SimGpsComData(gpsSignComIdent[18], 0),
+//    new SimGpsComData(gpsSignComIdent[19], 0),
+//    new SimGpsComData(gpsSignComIdent[20], 0),
+//    new SimGpsComData(gpsSignComIdent[21], 0),
+//    new SimGpsComData(gpsSignComIdent[22], 0),
+//    new SimGpsComData(gpsSignComIdent[23], 0),
+//    new SimGpsComData(gpsSignComIdent[24], 0),
+//    new SimGpsComData(gpsSignComIdent[25], 0),
+//    new SimGpsComData(gpsSignComIdent[26], 0),
+//    new SimGpsComData(gpsSignComIdent[27], 0),
+//    new SimGpsComData(gpsSignComIdent[28], 0),
+//    new SimGpsComData(gpsSignComIdent[29], 0),
+//    new SimGpsComData(gpsSignComIdent[30], 0),
+//    new SimGpsComData(gpsSignComIdent[31], 0),
+//    new SimGpsComData(gpsSignComIdent[32], 0),
+//    new SimGpsComData(gpsSignComIdent[33], 0),
+//    new SimGpsComData(gpsSignComIdent[34], 0),
+//    new SimGpsComData(gpsSignComIdent[35], 0),
+//    new SimGpsComData(gpsSignComIdent[36], 0) };
 
 DataRefIdent gpsMoveComIdent[][58] = {
 //    "sim/FMS/type_apt",
@@ -148,13 +148,13 @@ DataRefIdent gpsMoveComIdent[][58] = {
 //    "sim/FMS/fix_prev"
 };
 
-SimGpsBase *gpsMoveCom[] = {
-    new SimGpsComData(gpsMoveComIdent[0], 0),
-    new SimGpsComData(gpsMoveComIdent[1], 0),
-    new SimGpsComData(gpsMoveComIdent[2], 0),
-    new SimGpsComData(gpsMoveComIdent[3], 0),
-    new SimGpsComData(gpsMoveComIdent[4], 0),
-    new SimGpsComData(gpsMoveComIdent[5], 0) };
+//SimGpsBase *gpsMoveCom[] = {
+//    new SimGpsComData(gpsMoveComIdent[0], 0),
+//    new SimGpsComData(gpsMoveComIdent[1], 0),
+//    new SimGpsComData(gpsMoveComIdent[2], 0),
+//    new SimGpsComData(gpsMoveComIdent[3], 0),
+//    new SimGpsComData(gpsMoveComIdent[4], 0),
+//    new SimGpsComData(gpsMoveComIdent[5], 0) };
 
 
 

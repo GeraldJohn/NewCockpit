@@ -87,7 +87,6 @@ void SimSwitchInt::_update(bool updateOutput) {
     }//end if
 }
 
-//-----------------------------------------------------------------------------------------------
 //! Deklaration class SimSwitchCom
 class SimSwitchCom : public SimSwitchBase {
 public:
@@ -137,7 +136,6 @@ void SimSwitchCom::_update(bool updateOutput) {
     }//end if
 }//end void
 
-//------------------------------------------------------------------------------------------------
 //!Deklaration class SimSwitchLocal
 class SimSwitchLocal : public SimSwitchBase {
 public:
@@ -199,8 +197,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
                 if (_reg_nr == 3){
 
                     /// Setze die jeweilige Frequenz und StanbyFrequenz auf active
-                    SimRadioData::_modeSet = _if_true;
-                    SimStbyRadioData::_modeSet = _if_true;
+                    SimRadioData::_pageSet = _if_true;
 
                     /// Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myRadioEncSw._Cmode_set = -1;
@@ -211,7 +208,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
                     /// RadioLcd erste Zeile
                     Lcd0.setCursor (0, 0);
-                    Lcd0.print(SimRadioData::radioH[SimStbyRadioData::_modeSet]);   //"Com1" etc
+                    Lcd0.print(SimRadioData::radioH[SimRadioData::_pageSet]);   //"Com1" etc
                     /// RadioLcd zweite Zeile
                     Lcd0.setCursor (0, 1);
                     Lcd0.print(SimRadioData::radioH[8]);    //"Standby  .  "
@@ -244,10 +241,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
                 if (_reg_nr == 4) {
 
                     /// Setze die jeweilige Einheit auf active
-                    SimGpsIntData::_active_page = _if_true;
-                    SimGpsFltData::_active_page = _if_true;
-                    SimGpsComData::_active_page = _if_true;
-                    SimGpsLocal::  _active_page = _if_true;
+                    SimGpsBase::_active_page = _if_true;
 
                     /// Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myGps1EncSw._Cmode_set = -1;
@@ -255,23 +249,24 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
                     /// -> Lcd
                     Lcd2.setCursor (0, 0);
-                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_page * 4]);   //"Airport " etc
+                    Lcd2.print(SimGpsBase::gpsH[SimGpsBase::_active_page * 4]);   //"Airport " etc
                     Lcd2.setCursor (0, 1);
-                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_page * 4 + 1]);    //"Direct:"
+                    Lcd2.print(SimGpsBase::gpsH[SimGpsBase::_active_page * 4 + 1]);    //"Direct:"
                     Lcd2.setCursor (0, 2);
-                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_page * 4 + 2]);   //"Dist: " etc
+                    Lcd2.print(SimGpsBase::gpsH[SimGpsBase::_active_page * 4 + 2]);   //"Dist: " etc
                     Lcd2.setCursor (0, 3);
-                    Lcd2.print(SimGpsBase::gpsH[SimGpsIntData::_active_page * 4 + 3]);    //"Time:  .  "
+                    Lcd2.print(SimGpsBase::gpsH[SimGpsBase::_active_page * 4 + 3]);    //"Time:  .  "
 
                     /// Setze Flag für Lcd print
                     SimGpsIntData::_print = true;
+                    SimGpsFltData::_print = true;
                 }//endif reg_nr == 4
 
 
 
                 /// Swap Taster wurde geändert und true
                 if (_reg_nr == 2 && _sw_nr == 5){
-                    if(SimRadioData::_modeSet < 6){
+                    if(SimRadioData::_pageSet < 6){
                         SimStbyRadioData::_swap = true;
                         blink::_blink = true;
 
@@ -280,7 +275,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
                     }//endif modeset
                     //! im ATC Modus soll der Swap Taster die Transponder id starten
-                    else if (SimRadioData::_modeSet == 6){
+                    else if (SimRadioData::_pageSet == 6){
                        // SimSwitchCom::sw_radio[0]._drCom = 1;
                     }
                 }//endif reg 2 sw 5

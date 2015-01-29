@@ -16,7 +16,7 @@ public:
                   const bool *hasPowerFlag = &SimObject::hasPower);
 
     FlightSimInteger _drInt;
-    static int _modeSet;
+    static int _pageSet;
     static bool _print;
     static bool _swaped;
     static FlightSimInteger _drInt_active;
@@ -36,7 +36,7 @@ private:
 
 
 //!Initialisierung static & Definition static String Array radio
-int SimRadioData::_modeSet = 0;
+int SimRadioData::_pageSet = 0;
 bool SimRadioData::_print = true;
 bool SimRadioData::_swaped = false;
 String SimRadioData::_radioD = "";
@@ -76,7 +76,7 @@ class SimStbyRadioData : public SimData{
 
 public:
     SimStbyRadioData(const char *ident,
-                     const int &Mode, //Zugehörigkeits Modus
+                     const int &Page, //zugehörige Seite
                      const int &Digits, //max Einstell Pos
                      const int &LowLimit = 0, //für Parts
                      const int &UpLimit = 9, //für Parts
@@ -88,7 +88,7 @@ public:
     FlightSimInteger _drInt;
     short _changemode; //Pos der aktuellen Änderung
     int _digits;
-    static int _modeSet; //aktuell gewählter Modus
+    static int _pageSet; //aktuell gewählter Modus
     static bool _print;  //soll drInt im Lcd gezeigt werden; plus: static drInt_active = drInt
     static bool _swap;
     static String _radioD;
@@ -111,7 +111,7 @@ private:
 };//end Deklaration
 
 //!Initialisierung static
-int SimStbyRadioData::_modeSet = 0;
+int SimStbyRadioData::_pageSet = 0;
 bool SimStbyRadioData::_print = false;
 bool SimStbyRadioData::_swap = false;
 String SimStbyRadioData::_radioD = "";
@@ -120,7 +120,7 @@ const int SimStbyRadioData::posRadioData = 7;
 
 //! Definition class SimStbyRadioData
 SimStbyRadioData::SimStbyRadioData(const char *ident,
-                                   const int &Mode,
+                                   const int &Page,
                                    const int &Digits,
                                    const int &LowLimit,
                                    const int &UpLimit,
@@ -130,7 +130,7 @@ SimStbyRadioData::SimStbyRadioData(const char *ident,
                                    const bool *hasPowerFlag
                                    ) : SimData(NKSt, hasPowerFlag),
     _digits(Digits),
-    _mode(Mode),
+    _mode(Page),
     _nkst(NKSt),
     _lower(LowLimit),
     _upper(UpLimit),
@@ -146,7 +146,7 @@ void SimRadioData::_updateActive(){}
 
 //! Definition Methode _update
 void SimRadioData::_update(bool updateOutput){
-    if (_mode == _modeSet){
+    if (_mode == _pageSet){
         /// Stdby _swap == true =>
         if (_print){
             _print = false;
@@ -190,7 +190,7 @@ void SimStbyRadioData::_updateActive(){}
 void SimStbyRadioData::_update(bool updateOutput){
 
     /// Ist der inherente Mode gleich dem gesetzten Mode
-    if (_mode == _modeSet){
+    if (_mode == _pageSet){
 
         /// RadioEncSw wird unter Null auf Digits gesetzt
         myRadioEncSw._Cmode_set < 0 ? myRadioEncSw._Cmode_set = _digits : 0;
@@ -217,7 +217,7 @@ void SimStbyRadioData::_update(bool updateOutput){
         }
 
 
-    } //end if _mode == _modeSet
+    } //end if _mode == _pageSet
 } //end void
 
 

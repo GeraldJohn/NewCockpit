@@ -6,16 +6,18 @@
 ///Kommentar wird erneuert
 
 #include "blink.h"
+#include "SystemAnnc.h"
 #include "HardEnc.h"
 #include "HardSwitch.h"
 #include "HardLcd.h"
 #include "HardLed.h"
-#include "SimObject.h"
-#include "SimSwitch.h"
-#include "SystemAnnc.h"
-#include "SimGpsLocal.h"
+//#include "SimSwitch.h"
+//#include "SimGpsLocal.h"
 #include "AssignGpsInt.h"
+#include "AssignGpsCom.h"
 #include "AssignSwitch.h"
+#include "AssignLed.h"
+#include "SimObject.h"
 
 
 //#include "SimLcd.h"

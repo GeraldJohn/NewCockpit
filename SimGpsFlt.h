@@ -24,6 +24,7 @@ public:
     FlightSimFloat _drFlt;
     short _changemode;          //Pos der aktuellen Änderung
     int _cmodemax;
+    static bool _print;
 
 protected:
     String _gpsD, _gpsD_old;
@@ -35,7 +36,8 @@ private:
     void print_Lcd();
 };
 
-
+//! define static
+bool SimGpsFltData::_print = true;
 
 //! Definition class SimGpsFltData
 SimGpsFltData::SimGpsFltData(const char  *ident,
@@ -82,7 +84,7 @@ void SimGpsFltData::_update(bool updateOutput){
 //! Definition Methode _updateActive
 void SimGpsFltData::_updateActive(){}
 
-//! Definition Methode _print_lcd
+////! Definition Methode _print_lcd
 void SimGpsFltData::print_Lcd(){
     if (_print) {
         _print = false;

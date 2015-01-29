@@ -25,10 +25,11 @@ public:
     FlightSimInteger _drInt;
     short _changemode;          //Pos der aktuellen Änderung
     int _cmodemax;
+    static bool _print;
 
 protected:
-    String _gpsD = "", _gpsD_old = "";
 private:
+    String _gpsD = "", _gpsD_old = "xxx";
     int _page, _row, _pos, _lower, _upper, _jump, _faktor;
     static short _active_row;
 
@@ -41,6 +42,7 @@ private:
 
 ///Init static
 short SimGpsIntData::_active_row = 0;
+bool  SimGpsIntData::_print = true;
 
 
 //! Definition class SimGpsIntData
@@ -76,8 +78,9 @@ void SimGpsIntData::_update(bool updateOutput){
 
     /// Ist die zugehörige Seite gleich dem aktiven Seite
     if (_page == _active_page){
+        _gpsD_old = _gpsD;
 
-       //!Gps_Mode: Destination type anzeigen
+        //!Gps_Mode: Destination type anzeigen
         if (_page == 0 & _row == 0){ //
             switch (_drInt) {
             case 1 : _gpsD = "Airport "; break;
@@ -88,7 +91,7 @@ void SimGpsIntData::_update(bool updateOutput){
             case 12: _gpsD = "VOR     "; break;
             default: _gpsD = "Unknown "; break; } }
 
-       //!Efis_Mode:
+       //!Efis_Page:
         if (_page == 1){
 
            //!Range Anzeige
@@ -125,9 +128,8 @@ void SimGpsIntData::_update(bool updateOutput){
 
         if (_gpsD != _gpsD_old){
             _print = true;
-
-            _gpsD_old = _gpsD;
         }
+
         print_Lcd();
     }//end if _page == _activemode
 }//end void
