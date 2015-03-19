@@ -47,4 +47,5 @@ Erledigt:
 HDG ist Anzeige; ok
 Starter schalternull auf fuel valves; geändert in keypos dh. tank zuordnungen
 --Contrast_Bright::Output nur bei Änderung: verringert Flimmern nicht
-Encoder change für Range in EFIS mode
+SimGpsLocal: Umstellung auf source Übernahme funktioniert nicht
+             _active Pos aus row,pos für Efis fehlt noch

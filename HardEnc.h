@@ -25,8 +25,10 @@ HardEnc::HardEnc(const uint8_t PinA,
 //! Object Initialisierung
 HardEnc myRadioEnc(25, 26);
 HardEnc myApEnc   (27, 28);
-HardEnc myGps1Enc (10,  9);
-HardEnc myGpsOEnc (12, 11);
+HardEnc myGpsEnc[2] = {
+        HardEnc(10,  9),  //linker Enc
+        HardEnc(12, 11)   //rechter Enc
+};
 
 
 //! Definition Methode _update
@@ -37,11 +39,12 @@ void HardEnc::_update() {
     myApEnc._diff    = myApEnc.read() / 4;
     if (myApEnc._diff != 0) {myApEnc.write(0);}
 
-    myGpsOEnc._diff  = myGpsOEnc.read() / 4;
-    if (myGpsOEnc._diff != 0) {myGpsOEnc.write(0);}
+    myGpsEnc[0]._diff  = myGpsEnc[0].read() / 4;
+    if (myGpsEnc[0]._diff != 0) {myGpsEnc[0].write(0);}
 
-    myGps1Enc._diff   = myGps1Enc.read() / 4;
-    if (myGps1Enc._diff != 0) {myGps1Enc.write(0);}}
+    myGpsEnc[1]._diff  = myGpsEnc[1].read() / 4;
+    if (myGpsEnc[1]._diff != 0) {myGpsEnc[1].write(0);}
+}
 
 
 //! Deklaration class HardEncSw
@@ -69,24 +72,26 @@ HardEncSw::HardEncSw(const uint8_t PinA,
 //! Object Initialisierung
 HardEncSw myRadioEncSw = HardEncSw(30);
 HardEncSw myApEncSw    = HardEncSw(29);
-HardEncSw myGps1EncSw  = HardEncSw(32);
-HardEncSw myGpsOEncSw  = HardEncSw(31);
+HardEncSw myGpsEncSw[2]  = {
+    HardEncSw(32),
+    HardEncSw(31)
+};
 
 void HardEncSw::_setup() {
     pinMode(myRadioEncSw._pinA, INPUT_PULLUP);
     pinMode(myApEncSw._pinA,    INPUT_PULLUP);
-    pinMode(myGps1EncSw._pinA,  INPUT_PULLUP);
-    pinMode(myGpsOEncSw. _pinA, INPUT_PULLUP);  }
+    pinMode(myGpsEncSw[0]._pinA,  INPUT_PULLUP);
+    pinMode(myGpsEncSw[1]. _pinA, INPUT_PULLUP);  }
 
 void HardEncSw::_update() {
     myRadioEncSw.update();
     myApEncSw.update();
-    myGps1EncSw.update();
-    myGpsOEncSw.update();
+    myGpsEncSw[0].update();
+    myGpsEncSw[1].update();
     myRadioEncSw.fallingEdge() ? myRadioEncSw._Cmode_set-- : 0;
     myApEncSw.fallingEdge()    ? myApEncSw._Cmode_set--    : 0;
-    myGps1EncSw.fallingEdge()  ? myGps1EncSw._Cmode_set--  : 0;
-    myGpsOEncSw.fallingEdge()  ? myGpsOEncSw._Cmode_set--  : 0;   }
+    myGpsEncSw[0].fallingEdge()  ? myGpsEncSw[0]._Cmode_set--  : 0;
+    myGpsEncSw[1].fallingEdge()  ? myGpsEncSw[1]._Cmode_set--  : 0;   }
 
 
 #endif // HARDENC_H

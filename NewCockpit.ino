@@ -3,7 +3,7 @@
 #include <LiquidCrystal_SR.h>
 #include <Arduino.h>
 
-///Kommentar wird erneuert
+//!Kommentar wird erneuert
 
 #include "blink.h"
 #include "SystemAnnc.h"

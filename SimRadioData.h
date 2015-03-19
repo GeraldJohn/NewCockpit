@@ -98,7 +98,7 @@ public:
 private:
     int _drInt_VK;
     int _drInt_NK;
-    int _mode;
+    int _page;
     int _nkst;
     int _lower;
     int _upper;
@@ -130,7 +130,7 @@ SimStbyRadioData::SimStbyRadioData(const char *ident,
                                    const bool *hasPowerFlag
                                    ) : SimData(NKSt, hasPowerFlag),
     _digits(Digits),
-    _mode(Page),
+    _page(Page),
     _nkst(NKSt),
     _lower(LowLimit),
     _upper(UpLimit),
@@ -190,7 +190,7 @@ void SimStbyRadioData::_updateActive(){}
 void SimStbyRadioData::_update(bool updateOutput){
 
     /// Ist der inherente Mode gleich dem gesetzten Mode
-    if (_mode == _pageSet){
+    if (_page == _pageSet){
 
         /// RadioEncSw wird unter Null auf Digits gesetzt
         myRadioEncSw._Cmode_set < 0 ? myRadioEncSw._Cmode_set = _digits : 0;

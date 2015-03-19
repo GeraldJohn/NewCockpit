@@ -1,15 +1,19 @@
 #ifndef BLINK_H
 #define BLINK_H
 
-//! Deklaration
+//! Deklaration \class blink
+//! if boolean _blink == true, then onboard LED will blink once
 class blink {
     public:
         blink();
         static bool _blink;
+        static void _doBlink();
+
+protected:
         static elapsedMillis ms;
         static int dauer;
         static int pause;
-        static void _doBlink(); };
+ };
 
 //! Definition
 blink::blink() {}

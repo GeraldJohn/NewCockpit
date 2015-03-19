@@ -81,7 +81,7 @@ SimSwitchInt::SimSwitchInt(const int  &swNr,
 //! Definition Methode _update(bool updateOutput)
 void SimSwitchInt::_update(bool updateOutput) {
     if (updateOutput){
-        if (HardSwitch::changedBit[_reg_nr] & (1 << _sw_nr)){
+        if (HardSwitch::changed_byte[_reg_nr] & (1 << _sw_nr)){
             ((HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr)) == (1 << _sw_nr)) ? _drInt = _if_true : _drInt = _if_false;
         }
     }//end if
@@ -93,14 +93,16 @@ public:
     SimSwitchCom(const int  &swNr,
                  const int  &regNr,
                  const char *ident,
-                 const bool &taster          = false,
-                 const int  &if_true         = 1,
-                 const int  &if_false        = 0,
+                 const bool &taster          = false,       //Tasterfunktion
+                 const int  &mode            = 0,           //Modus 0 = Ap/Radio : 1 = Gps
+                 const int  &if_true         = 1,           //Wert bei 1
+                 const int  &if_false        = 0,           //Wert bei 0
                  const bool *hasPowerFlag    = &SimObject::hasPower
             );
     int _sw_nr;
     int _reg_nr;
     bool _taster;
+    int _mode;
     int _if_true;
     int _if_false;
 
@@ -113,14 +115,16 @@ private:
 SimSwitchCom::SimSwitchCom(const int  &swNr,
                            const int  &regNr,
                            const char *ident,
-                           const bool &taster,     //Tasterfunktion
-                           const int  &if_true,    //Wert bei 1
+                           const bool &taster,
+                           const int  &mode,
+                           const int  &if_true,
                            const int  &if_false,
                            const bool *hasPowerFlag
                            ) : SimSwitchBase(hasPowerFlag),
     _sw_nr(swNr),
     _reg_nr(regNr),
     _taster(taster),
+    _mode(mode),
     _if_true(if_true),
     _if_false(if_false)
 {
@@ -130,8 +134,12 @@ SimSwitchCom::SimSwitchCom(const int  &swNr,
 //! Definition Methode _update
 void SimSwitchCom::_update(bool updateOutput) {
     if (updateOutput){
-        if (HardSwitch::changedBit[_reg_nr] & (1 << _sw_nr)){
-            ((HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr)) == (1 << _sw_nr)) ? _drCom = _if_true : _drCom = _if_false;
+        if (_mode == 0 && SimGpsBase::_active_page != 0 ||      //!< normale Tastenbelegung
+                _mode == 1 && SimGpsBase::_active_page == 0 ||  //!< GPS Tastenbelegung
+                _mode == 2 && SimRadioData::_pageSet == 6){     //!< im ATC Modus soll der Swap Taster die Transponder id starten
+            if (HardSwitch::changed_byte[_reg_nr] & (1 << _sw_nr)){
+                ((HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr)) == (1 << _sw_nr)) ? _drCom = _if_true : _drCom = _if_false;
+            }
         }
     }//end if
 }//end void
@@ -174,10 +182,10 @@ SimSwitchLocal::SimSwitchLocal(const int  &swNr,
 void SimSwitchLocal::_update(bool updateOutput) {
     if (updateOutput){
 
-        /// Existiert für das Object(sw_nr, reg_nr) ein changedBit, dh. Taster/Schalter betätigt
-        if (HardSwitch::changedBit[_reg_nr] & (1 << _sw_nr)){
+        //! Abfrage: Existiert für das Object(sw_nr, reg_nr) ein changed_byte, dh. Taster/Schalter betätigt
+        if (HardSwitch::changed_byte[_reg_nr] & (1 << _sw_nr)){
 
-            /// recall Taster wurde geändert
+            //! Abfrage: Wurde recall Taster betätigt
             if(HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)){
                 masterCaution.setMasterRecall(true);
                 blink::_blink = true;
@@ -189,65 +197,62 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
 
 
-            /// Ist für das Object(sw_nr, reg_nr) die _sw_nr des sw_byte true, dh. Taster/Schalter auf on
+            //! Abfrage: Ist für das Object(sw_nr, reg_nr) die _sw_nr des sw_byte true, dh. Taster/Schalter auf on
             if ((HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr)) == (1 << _sw_nr)){
 
-                ///  Ist die _reg_nr des Objects == 3: => Radio Rotary Switch wurde betätigt
-                /// _mode auf Wert von _if_true gesetzt
+                //! Abfrage:  Ist die _reg_nr des Objects == 3: => Radio Rotary Switch wurde betätigt
                 if (_reg_nr == 3){
 
-                    /// Setze die jeweilige Frequenz und StanbyFrequenz auf active
+                    //! Setze die jeweilige Frequenz und StanbyFrequenz auf active
                     SimRadioData::_pageSet = _if_true;
 
-                    /// Setze _CMode_set auf -1 => CMode_set = CModeMax
+                    //! Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myRadioEncSw._Cmode_set = -1;
 
-                    /// Setze Flag für Lcd print
+                    //! Setze Flag für Lcd print
                     SimRadioData::_print = true;
                     SimStbyRadioData::_print = true;
 
-                    /// RadioLcd erste Zeile
+                    //! RadioLcd erste Zeile
                     Lcd0.setCursor (0, 0);
                     Lcd0.print(SimRadioData::radioH[SimRadioData::_pageSet]);   //"Com1" etc
-                    /// RadioLcd zweite Zeile
+                    //! RadioLcd zweite Zeile
                     Lcd0.setCursor (0, 1);
                     Lcd0.print(SimRadioData::radioH[8]);    //"Standby  .  "
                 }//endif reg_nr == 3
 
 
-                /// _reg_nr == 9: Autopilot Rotary Switch
-                /// _mode auf Wert von _if_true gesetzt
+                //! Abfrage: Ist _reg_nr == 9: Autopilot Rotary Switch
                 if (_reg_nr == 9) {
 
-                    /// Setze die eingestellte Frequenz und StanbyFrequenz auf active
+                    //! Setze die eingestellte Frequenz und StanbyFrequenz auf active
                     SimApData::_active_page = _if_true;
 
-                    /// Setze _CMode_set auf -1 => CMode_set = CModeMax
+                    //! Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myApEncSw._Cmode_set = -1;
 
 
-                    /// -> Lcd
+                    //! -> Lcd
                     Lcd1.setCursor (0, 0);
                     Lcd1.print(SimApData::autopH[SimApData::_active_page * 2]);   //"Alt " etc
                     Lcd1.setCursor (0, 1);
                     Lcd1.print(SimApData::autopH[SimApData::_active_page * 2 + 1]);    //"Standby  .  "
 
-                    /// Setze Flag für Lcd print
+                    //! Setze Flag für Lcd print
                     SimApData::_print = true;
                 } //endif reg_nr == 9
 
-                /// _reg_nr == 4: GPS Rotary Switch
-                /// _mode auf Wert von _if_true gesetzt
+                //! Abfrage: Ist _reg_nr == 4: GPS Rotary Switch
                 if (_reg_nr == 4) {
 
-                    /// Setze die jeweilige Einheit auf active
+                    //! Setze die zugehörige Seite auf active
                     SimGpsBase::_active_page = _if_true;
 
-                    /// Setze _CMode_set auf -1 => CMode_set = CModeMax
-                    myGps1EncSw._Cmode_set = -1;
+                    //! Setze _CMode_set auf -1 => CMode_set = CModeMax
+                    myGpsEncSw[0]._Cmode_set = -1;
 
 
-                    /// -> Lcd
+                    //! -> Lcd
                     Lcd2.setCursor (0, 0);
                     Lcd2.print(SimGpsBase::gpsH[SimGpsBase::_active_page * 4]);   //"Airport " etc
                     Lcd2.setCursor (0, 1);
@@ -257,30 +262,26 @@ void SimSwitchLocal::_update(bool updateOutput) {
                     Lcd2.setCursor (0, 3);
                     Lcd2.print(SimGpsBase::gpsH[SimGpsBase::_active_page * 4 + 3]);    //"Time:  .  "
 
-                    /// Setze Flag für Lcd print
+                    //! Setze Flag für Lcd print
                     SimGpsIntData::_print = true;
                     SimGpsFltData::_print = true;
                 }//endif reg_nr == 4
 
 
 
-                /// Swap Taster wurde geändert und true
+                //! Abfrage: Wurde Swap Taster geändert und true
                 if (_reg_nr == 2 && _sw_nr == 5){
                     if(SimRadioData::_pageSet < 6){
                         SimStbyRadioData::_swap = true;
                         blink::_blink = true;
 
-                        /// Setze _CMode_set auf -1 => CMode_set = CModeMax
+                        //! Setze _CMode_set auf -1 => CMode_set = CModeMax
                         myRadioEncSw._Cmode_set = -1;
 
                     }//endif modeset
-                    //! im ATC Modus soll der Swap Taster die Transponder id starten
-                    else if (SimRadioData::_pageSet == 6){
-                       // SimSwitchCom::sw_radio[0]._drCom = 1;
-                    }
                 }//endif reg 2 sw 5
 
-                /// reset Taster wurde geändert und true
+                //! Abfrage: Wurde reset Taster geändert und true
                 if (_reg_nr == 2 && _sw_nr == 7) {
                     //if (HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)){
                     masterCaution.reset();
@@ -289,7 +290,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
                 }//endif re 2 sw 7
 
             }//endif sw_byte
-        }// end if changedBit
+        }// end if changed_byte
     }//end if updateOutput
 }//end void
 

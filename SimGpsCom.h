@@ -2,66 +2,86 @@
 #define SIMGPSCOM_H
 
 #include "SimGpsBase.h"
+#include "HardEnc.h"
 
 //! Deklaration class SimGpsComData
 class SimGpsComData : public SimGpsBase {
 
-    public:
-        SimGpsComData(const char  *ident,
-                      const int   &Mode,             //Zugehörigkeits Modus
-                      const int   &Row = 0,
-                      const int   &CModeMax = 1,         //max Einstell Pos
-                      const int   &LowLimit = 0,     //für Parts
-                      const int   &UpLimit = 9,      //für Parts
-                      const float &Faktor = 1,         //für NKSt
-                      const bool  &Jump = true,       //Überspringen an Grenzwerten
-                      const int   &NKSt = 0,
-                      const bool *hasPowerFlag = &SimObject::hasPower);
+public:
+    //!Constructor
+    /*! \param ident DataRefIdent phrase
+     *  \param Page associated Page
+     *  \param EncNr number of Gps Encoder 0 = left/inner 1 = right/outer Gps Encoder
+     *  \param CModeMax  max change Positions
+     *  \param LowLimit  lower limit of value
+     *  \param UpLimit   upper limit of value
+     *  \param Faktor    multiplicator
+     *  \param Jump      jump from limit to limit or stay at limit
+     *  \param NKSt      number of digit after point
+     *  \param hasPowerFlag inherited from SimObject
+     *  \param _changemode  Pos of current change
+     */
+    SimGpsComData(const char  *ident,
+                  const int   &Page = 0,
+                  const int   &EncNr = 0,
+                  const bool  &EncSw = false,
+                  const bool  &DownResp = false,
+                  const bool  &UpResp = true,
+                  const int   &NKSt = 0,
+                  const bool *hasPowerFlag = &SimObject::hasPower);
 
-        FlightSimCommand _drCom;
-        short _changemode;          //Pos der aktuellen Änderung
-        int _cmodemax;
+    FlightSimCommand _drCom;
 
-    protected:
-        String _gpsD;
-    private:
-        int  i, _mode, _row, _lower, _upper, _jump;
-        float _faktor;
-        void _update(bool updateOutput);
-        void _updateActive(); };
+protected:
+    String _gpsD;
+private:
+    int  i, _page, _encnr, _encsw, _down, _up;
+    float _faktor;
+    void _update(bool updateOutput);
+    void _updateActive(); };
 
-//! Definition class----------------------------------------------------------
+//! Definition class SimGpsComData
 SimGpsComData::SimGpsComData(const char  *ident,
-                             const int   &Mode,             //Zugehörigkeits Modus
-                             const int   &Row,
-                             const int   &CModeMax,         //max Einstell Pos
-                             const int   &LowLimit,         //für Parts
-                             const int   &UpLimit,          //für Parts
-                             const float &Faktor,
-                             const bool  &Jump,             //Überspringen an Grenzwerten
+                             const int   &Page,
+                             const int   &EncNr,
+                             const bool  &EncSw,
+                             const bool  &DownResp,
+                             const bool  &UpResp,
                              const int   &NKSt,
                              const bool *hasPowerFlag
                             ) : SimGpsBase(NKSt, hasPowerFlag),
-    _cmodemax(CModeMax),
-    _mode(Mode),
-    _row(Row),
-    _lower(LowLimit),
-    _upper(UpLimit),
-    _faktor(Faktor),
-    _jump(Jump)
+    _page(Page),
+    _encnr(EncNr),
+    _encsw(EncSw),
+    _down(DownResp),
+    _up(UpResp)
 {
     _drCom.assign((const _XpRefStr_ *)ident);
 }
 
 //! Definition Methode _update
-void SimGpsComData::_update(bool updateOutput) {} //end void
+void SimGpsComData::_update(bool updateOutput) {
+    //! Ist die zugeordnete Page gleich der aktuellen Page
+    /*! _drCom werden ggf. durch EncSw.fallingEdge oder Enc.diff ausgelöst
+     */
+    if (_page == _active_page){
+
+        if (_encsw){ _drCom = myGpsEncSw[_encnr].fallingEdge();}
+        else if(_up){ _drCom = myGpsEnc[_encnr]._diff;}
+        else if (_down){_drCom = myGpsEnc[_encnr]._diff * -1;}
+
+    } //end if _page == _pageSet
+} //end void
+
+
 
 //! Definition Methode _updateActive
 void SimGpsComData::_updateActive() {}
 
+#endif // SIMGPSCOM_H
 
 //! GPS Commands
-DataRefIdent gpsSignComIdent[][58] = {
+//DataRefIdent gpsSignComIdent[][58] = {
 //    "sim/FMS/key_0",
 //    "sim/FMS/key_1",
 //    "sim/FMS/key_2",
@@ -98,7 +118,7 @@ DataRefIdent gpsSignComIdent[][58] = {
 //    "sim/FMS/key_X",
 //    "sim/FMS/key_Y",
 //    "sim/FMS/key_Z"
-};
+//};
 
 //SimGpsBase *gpsSignCom[] = {
 //    new SimGpsComData(gpsSignComIdent[0], 0),
@@ -139,23 +159,24 @@ DataRefIdent gpsSignComIdent[][58] = {
 //    new SimGpsComData(gpsSignComIdent[35], 0),
 //    new SimGpsComData(gpsSignComIdent[36], 0) };
 
-DataRefIdent gpsMoveComIdent[][58] = {
+//DataRefIdent fmsMoveComIdent[][58] = {
 //    "sim/FMS/type_apt",
 //    "sim/FMS/type_vor",
 //    "sim/FMS/type_ndb",
 //    "sim/FMS/type_fix",
 //    "sim/FMS/fix_next",
 //    "sim/FMS/fix_prev"
-};
+//};
 
 //SimGpsBase *gpsMoveCom[] = {
-//    new SimGpsComData(gpsMoveComIdent[0], 0),
-//    new SimGpsComData(gpsMoveComIdent[1], 0),
-//    new SimGpsComData(gpsMoveComIdent[2], 0),
-//    new SimGpsComData(gpsMoveComIdent[3], 0),
-//    new SimGpsComData(gpsMoveComIdent[4], 0),
-//    new SimGpsComData(gpsMoveComIdent[5], 0) };
+//    new SimGpsComData(fmsMoveComIdent[0], 0),
+//    new SimGpsComData(fmsMoveComIdent[1], 0),
+//    new SimGpsComData(fmsMoveComIdent[2], 0),
+//    new SimGpsComData(fmsMoveComIdent[3], 0),
+//    new SimGpsComData(fmsMoveComIdent[4], 0),
+//    new SimGpsComData(fmsMoveComIdent[5], 0) };
+//! Mögliche 8 Positionen in der Efis Anzeige
+//int _active_pos[8][2] ={{0,9},{1,9},{3,9},{3,11},{3,13},{3,15},{3,17},{3,19}};
+//_row = _active_pos[n][0];
+//_pos = _active_pos[n][1];
 
-
-
-#endif // SIMGPSCOM_H

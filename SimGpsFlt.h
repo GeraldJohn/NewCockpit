@@ -110,7 +110,7 @@ DataRefIdent gpsFltIdent[][58] = {
 };
 
 
-//!                       *ident, Mode, Row, CModeMax, LowLimit, UpLimit, Faktor, Jump, NKSt, hasPowerFlag,
+//!                       *ident, Page, Row, CModeMax, LowLimit, UpLimit, Faktor, Jump, NKSt, hasPowerFlag,
 SimGpsBase *gpsFltData[] = {
     new SimGpsFltData(gpsFltIdent[0], 0, 1),
     new SimGpsFltData(gpsFltIdent[1], 0, 2),

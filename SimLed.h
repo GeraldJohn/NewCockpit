@@ -240,18 +240,20 @@ SimLEDLocal::SimLEDLocal(
 void SimLEDLocal::_updateActive() {
     switch (_led_nr) {
     case 0:
-        /// Efis Enc Led rot
-        myGpsOEncSw._Cmode_set != 1 ? setActive(1) : setActive(0);
+        /// GpsEnc[0] Enc Led rot
+        myGpsEncSw[0]._Cmode_set != 1 ? setActive(1) : setActive(0);
         break;
     case 1:
-        /// Efis Enc Led gruen
-        myGpsOEncSw._Cmode_set <= 1 ? setActive(1) : setActive(0);
+        /// GpsEnc[0] Led gruen
+        myGpsEncSw[0]._Cmode_set <= 1 ? setActive(1) : setActive(0);
         break;
     case 2:
-        /// Gps Enc Led rot
+        /// GpsEnc[1] Led rot
+        myGpsEncSw[1]._Cmode_set != 1 ? setActive(1) : setActive(0);
         break;
     case 3:
-        /// Gps Enc Led gruen
+        /// GGpsEnc[1] Led gruen
+        myGpsEncSw[1]._Cmode_set <= 1 ? setActive(1) : setActive(0);
         break;
     case 4:
         /// Radio Enc Led rot

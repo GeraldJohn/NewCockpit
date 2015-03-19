@@ -4,44 +4,49 @@
 #include "SimObject.h"
 #include "SimLed.h"
 
+//! Deklaration des Namespace b737
 namespace b737 {
 const int MAX_ANNCS_PER_SA = 12;
 const int MAX_SA_PER_MC = 12;
 
-//! System Annunciator class z.B. für Boeing 737
-//! Arbeitet zusammen mit der MasterCaution class.
 //! Deklaration class SystemAnnc dh. die 6 roten Led
+/*! System Annunciator class z.B. für Boeing 737.
+ *  Arbeitet zusammen mit der MasterCaution class.
+ */
 class SystemAnnc : public SimLEDBase {
 public:
 
     //! Constructor
     /*! \param ledNr Anschluss Nummer auf LED Ic. Auf -1 setzen, wenn
-   *         nicht automatisch auf eine LED gesetzt wird.
-   *         (LED output kann immer noch mittels der
-   *         .isLit() member function gestartet werden.)
-   *
-   *  \param regNr Nummer des LED Ic. Set to -1
-   *         if not automatically outputting to an LED.
-   *
-   *  \param subAnncList Liste von SimLEDs (dataref-fed or local-logic-fed)
-   *         die zu diesem System gehören und diesen System Annunciator ansteuern
-   *         Sie müssen nicht mit realen Leds verknüft sein
-   *         (Sie können eine led- und reg nummer von -1 haben.)
-   *
-   *  \param sizeof_subAnncList Diese MUSS mittels sizeof(subAnncList) festgestellt werden
-   *         wenn der constructor aufgerufen wird!
-   *
-   *  \param enableTest Wenn diese SystemAnnc in algemeinen Led tests teilnehmen soll.
-   *         Default ist 'false', da der Ledtest von MasterCaution.recallMode(true)
-   *         zur Verfügung gestellt wird.
-   *
-   *  \param hasPowerFlag pointer to bool arbeitet als simulierte power supply für diesen SystemAnnc
-   */
+     *         nicht automatisch auf eine LED gesetzt wird.
+     *         (LED output kann immer noch mittels der
+     *         .isLit() member function gestartet werden.)
+     *
+     *  \param regNr Nummer des LED Ic. Set to -1
+     *         if not automatically outputting to an LED.
+     *
+     *  \param subAnncList Pointer auf Array von Sim Objekten je SystemAnnc Led
+     *         Liste von SimLEDs (dataref-fed or local-logic-fed)
+     *         die zu diesem System gehören und diesen System Annunciator ansteuern
+     *         Sie müssen nicht mit realen Leds verknüft sein
+     *         (Sie können eine led- und reg nummer von -1 haben.)
+     *
+     *  \param sizeof_subAnncList Anzahl der Objekte
+     *         Diese MUSS mittels sizeof(subAnncList) festgestellt werden
+     *         wenn der constructor aufgerufen wird!
+     *
+     *  \param enableTest Wenn diese SystemAnnc in algemeinen Led tests teilnehmen soll.
+     *         Default ist 'false', da der Ledtest von MasterCaution.recallMode(true)
+     *         zur Verfügung gestellt wird.
+     *
+     *  \param hasPowerFlag pointer to bool arbeitet als simulierte power supply für diesen SystemAnnc
+     *  \todo  toDo Liste erstellen
+     */
 
     SystemAnnc (const int    &ledNr,
                 const int    &regNr,
-                SimLEDBase   *subAnncList[],        //Pointer auf Array von Sim Objekten je SystemAnnc Led
-                const size_t sizeof_subAnncList,    //Anzahl der Objekte
+                SimLEDBase   *subAnncList[],
+                const size_t sizeof_subAnncList,
                 const bool   &enableTest   = true,
                 const bool   *hasPowerFlag = &SimObject::hasPower )
         : SimLEDBase(ledNr, regNr, enableTest, hasPowerFlag)
@@ -52,7 +57,7 @@ public:
             _subAnncCount = MAX_ANNCS_PER_SA;
     } //end Constuctor
 
-    //! benötigt damit MasterCaution unsere _reset function aufrufen kann
+    //! benötigt, damit MasterCaution unsere _reset function aufrufen kann
     friend class MasterCaution;
     bool _recallMode;
 
@@ -70,7 +75,7 @@ private:
 
     //! Recall mode lights the output regardless of subannc state
     //! Flag des RecallModes, der Led anschaltet unabhängig ihres subannc Status
-   // bool _recallMode;
+    // bool _recallMode;
 
     //! True if any subanncs are active, regardless of ack'd status
     //! True wenn ein Sub Annunc aktiv ist, unabhängig vom Acknowleged Status

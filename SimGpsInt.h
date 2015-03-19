@@ -99,7 +99,7 @@ void SimGpsIntData::_update(bool updateOutput){
 
                //!Wenn Row aktiv, Encoder abfragen
                 if (_row == _active_row){
-                    if(myGps1Enc._diff){
+                    if(myGpsEnc[0]._diff){
                         change_Date();
                         blink::_blink = true;
                         _gpsD = String(int(10 * pow(2, _drInt))) + " ";
@@ -139,7 +139,7 @@ void SimGpsIntData::_updateActive(){}
 
 //! Definition Method change_Date
 void SimGpsIntData::change_Date() {
-    _drInt = _drInt + (myGps1Enc._diff * pow(10, myGps1EncSw._Cmode_set + 1) * _faktor);
+    _drInt = _drInt + (myGpsEnc[0]._diff * _faktor);
 
     if (_jump) {
         if (_drInt > _upper) {_drInt = _drInt - _upper - _lower + 1;}

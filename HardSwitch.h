@@ -10,7 +10,7 @@ public:
     static void _update();
 
     static byte sw_byte[];
-    static byte changedBit[];
+    static byte changed_byte[];
 
 
 private:
@@ -28,7 +28,7 @@ protected:
 HardSwitch::HardSwitch() {}
 
 byte HardSwitch::sw_byte[10];
-byte HardSwitch::changedBit[10];
+byte HardSwitch::changed_byte[10];
 
 const byte HardSwitch::latchPin = 20;
 const byte HardSwitch::clockPin = 21;
@@ -47,15 +47,15 @@ void HardSwitch::_setup(){
 //!Definition Methode _update()
 void HardSwitch::_update(){
     int n;
-    byte reg_byte_old[10];
+    byte sw_byte_old[10];
 
     digitalWrite(latchPin,1);
     delayMicroseconds(2);
     digitalWrite(latchPin,0);
     for (n = 0 ; n <= 9; n++){
-        reg_byte_old[n] = sw_byte[n];
+        sw_byte_old[n] = sw_byte[n];
         sw_byte[n] = shiftIn(dataPin, clockPin);
-        changedBit[n] = sw_byte[n] ^ reg_byte_old[n];
+        changed_byte[n] = sw_byte[n] ^ sw_byte_old[n];
     }
 }
 
