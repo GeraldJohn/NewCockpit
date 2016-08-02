@@ -14,7 +14,8 @@ DataRefIdent sw_elecIdent[][58] = {
     "sim/cockpit2/electrical/generator_on[1]",
     "sim/cockpit2/electrical/APU_generator_on",
     "sim/cockpit2/electrical/inverter_on[0]",
-    "sim/cockpit2/electrical/inverter_on[1]"  };
+    "sim/cockpit2/electrical/inverter_on[1]"
+};
 SimSwitchBase *sw_elec[] = {
     new SimSwitchInt(4, 7, sw_elecIdent[0]),
     new SimSwitchInt(7, 7, sw_elecIdent[1]),
@@ -41,7 +42,8 @@ DataRefIdent sw_sonstIdent[][58] = {
     "sim/cockpit2/ice/ice_pitot_heat_on_copilot",
     "sim/cockpit2/engine/actuators/igniter_on[0]",
     "sim/cockpit2/engine/actuators/igniter_on[1]",
-    "sim/cockpit2/switches/landing_lights_switch[1]"  };
+    "sim/cockpit2/switches/landing_lights_switch[1]"
+};
 SimSwitchBase *sw_sonst[] = {
     new SimSwitchInt(4, 0, sw_sonstIdent[0]),
     new SimSwitchInt(4, 6, sw_sonstIdent[1]),
@@ -64,7 +66,10 @@ DataRefIdent sw_spezIdent[][58] = {
     "sim/cockpit2/switches/rotor_brake",
     "sim/cockpit2/switches/clutch_engage",
     "sim/cockpit2/switches/canopy_open",
-    "sim/cockpit2/pressurization/actuators/bleed_air_mode"  };
+    "sim/cockpit2/pressurization/actuators/bleed_air_mode",
+    "sim/cockpit2/engine/actuators/fuel_pump_on[0]",
+    "sim/cockpit2/engine/actuators/fuel_pump_on[1]"
+};
 SimSwitchBase *sw_spez[] = {
     new SimSwitchInt(4, 2, sw_spezIdent[0]),
     new SimSwitchInt(1, 2, sw_spezIdent[1], false, 0, 1),
@@ -74,14 +79,15 @@ SimSwitchBase *sw_spez[] = {
     new SimSwitchInt(4, 1, sw_spezIdent[5], false, 4),
     new SimSwitchInt(0, 1, sw_spezIdent[5], false, 2),
     new SimSwitchInt(0, 2, sw_spezIdent[6]),
-    new SimSwitchInt(2, 2, sw_spezIdent[6]) };
+    new SimSwitchInt(2, 2, sw_spezIdent[7]) };
 
 //! Two starter switches
 DataRefIdent sw_startIdent[][58] = {
     "sim/starters/engage_starter_1",
     "sim/starters/engage_starter_2",
     "sim/cockpit2/engine/actuators/ignition_key[0]",
-    "sim/cockpit2/engine/actuators/ignition_key[1]"  };
+    "sim/cockpit2/engine/actuators/ignition_key[1]"
+};
 SimSwitchBase *sw_start[] = {
     new SimSwitchCom(2, 5, sw_startIdent[0], true),
     new SimSwitchCom(5, 5, sw_startIdent[1], true),
@@ -98,7 +104,8 @@ DataRefIdent sw_apIdent[][58] = {
     "sim/autopilot/heading",
     "sim/autopilot/NAV",
     "sim/autopilot/approach",
-    "sim/autopilot/back_course"  };
+    "sim/autopilot/back_course"
+};
 SimSwitchBase *sw_ap[] = {
     new SimSwitchInt(2, 7, sw_apIdent[0], false, 2, 1),
     new SimSwitchInt(3, 7, sw_apIdent[0], false, 0, 1),
@@ -113,14 +120,15 @@ SimSwitchBase *sw_ap[] = {
 
 //! Switches and Buttons for Radio
 DataRefIdent sw_radioIdent[][58] = {
-    "sim/cockpit2/radios/indicators/transponder_id",
+    "sim/transponder/transponder_ident",
     "sim/cockpit2/radios/actuators/transponder_mode",
     "sim/audio_panel/select_audio_com1",
     "sim/audio_panel/select_audio_com2",
     "sim/audio_panel/select_audio_nav1",
     "sim/audio_panel/select_audio_nav2",
     "sim/audio_panel/select_audio_adf1",
-    "sim/audio_panel/select_audio_adf2"  };
+    "sim/audio_panel/select_audio_adf2"
+};
 SimSwitchBase *sw_radio[] = {
     new SimSwitchCom(5, 2, sw_radioIdent[0], true, 2),
     new SimSwitchInt(7, 5, sw_radioIdent[1], false, 2, 1),
@@ -132,7 +140,7 @@ SimSwitchBase *sw_radio[] = {
     new SimSwitchCom(6, 1, sw_radioIdent[6], true),
     new SimSwitchCom(7, 1, sw_radioIdent[7], true) };
 
-
+/*
 //! GPS Command PushButtons
 DataRefIdent gpsComPbIdent[][58] = {
     "sim/GPS/g430n1_cdi",
@@ -146,7 +154,8 @@ DataRefIdent gpsComPbIdent[][58] = {
     "sim/GPS/g430n1_menu",
     "sim/GPS/g430n1_direct",
     "sim/GPS/g430n1_zoom_out",
-    "sim/GPS/g430n1_zoom_in"  };
+    "sim/GPS/g430n1_zoom_in"
+};
 SimSwitchBase *sw_gpsCom[] = {
     new SimSwitchCom(4, 8, gpsComPbIdent[0], true, 1),
     new SimSwitchCom(7, 8, gpsComPbIdent[1], true, 1),
@@ -161,6 +170,9 @@ SimSwitchBase *sw_gpsCom[] = {
     new SimSwitchCom(6, 1, gpsComPbIdent[10], true, 1),
     new SimSwitchCom(7, 1, gpsComPbIdent[11], true, 1)
 };
+
+*/
+
 
 //! Eight Positions of the Radio Rotary Switches
 SimSwitchBase *sw_radio_mode[8] = {
@@ -219,8 +231,6 @@ SimSwitchBase *sw_local[3] = {
 
 
 
-// "sim/cockpit2/engine/actuators/fuel_pump_on[0]",
-// "sim/cockpit2/engine/actuators/fuel_pump_on[1]",
 
 
 

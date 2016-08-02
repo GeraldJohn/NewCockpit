@@ -1,3 +1,4 @@
+
 #include <Bounce.h>
 #include <Encoder.h>
 #include <LiquidCrystal_SR.h>
@@ -5,26 +6,27 @@
 
 //!Kommentar wird erneuert
 
-#include "blink.h"
-#include "SystemAnnc.h"
-#include "HardEnc.h"
-#include "HardSwitch.h"
-#include "HardLcd.h"
-#include "HardLed.h"
-//#include "SimSwitch.h"
-//#include "SimGpsLocal.h"
-#include "AssignGpsInt.h"
-#include "AssignGpsCom.h"
-#include "AssignSwitch.h"
 #include "AssignLed.h"
-#include "SimObject.h"
+#include "AssignApData.h"
+#include "AssignRadioData.h"
+#include "AssignSwitch.h"
+//#include "AssignGpsInt.h"
+//#include "AssignGpsCom.h"
+
+
+//#include "HardSwitch.h"
+//#include "SimObject.h"
+
+//#include "SystemAnnc.h"
+#include "SimGpsLocal.h"
+//#include "SimSwitch.h"
 
 
 //#include "SimLcd.h"
-#include "SimData.h"
-#include "SimDivData.h"
-#include "SimApData.h" "
-#include "SimRadioData.h"
+//#include "SimData.h"
+//#include "SimDivData.h"
+//#include "SimApData.h" "
+//#include "SimRadioData.h"
 
 
 void setup() {
@@ -42,13 +44,13 @@ void loop() {
 
     //delay(500);
 
-    SimObject::update();
     HardEnc::_update();
     HardEncSw::_update();
     HardLed::_update();
+    contrast_brightn::_update();
     HardSwitch::_update();
     //HardLcd::_update();
-    contrast_brightn::_update();
+    SimObject::update();
     blink::_doBlink();
 
 
@@ -59,7 +61,7 @@ void loop() {
 
   Lcd2.setCursor (1, 3);
   Lcd2.print("ledbyte ");
-  Lcd2.print(SimLEDBase::_led_byte[0]);
+  Lcd2.print(HardLed::_led_byte[0]);
 
   Lcd2.setCursor (0, 1);
   Lcd2.print("_autopD_old ");

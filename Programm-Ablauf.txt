@@ -1,0 +1,49 @@
+NewCockpit.ino
+Include                    nutzt                   ermöglicht Methode
+
+#include "HardEnc.h"                                        - HardEncSw::_setup();
+                                                            - HardEnc::_update();
+                                                            - HardEncSw::_update();
+#include "HardLcd.h"                                        - HardLcd::_setup();
+                                                            - contrast_brightn::_update();
+#include "HardLed.h"                                        - HardLed::_setup();
+                                                            - HardLed::_update();
+#include "HardSwitch.h"                                     - HardSwitch::_setup();
+                                                            - HardSwitch::_update();
+#include "SimObject.h"                                      - SimObject::setup();
+                                                            - SimObject::update();
+#include "blink.h"                                          - blink::_doBlink();
+
+
+
+
+#include "AssignLed.h"                                      SimLedBase
+    #include "SimLed.h"                                     SimObject
+        #include "SimObject.h"
+        #include "HardLed.h"
+        #include "SimDivData.h"
+            #include "SimData.h"
+                #include "SimObject.h"
+
+#include "AssignApData.h"
+    #include "SimApData.h"
+        #include "SimData.h"
+            #include "SimObject.h"
+
+#include "AssignRadioData.h"
+    #include "SimRadioData.h"
+        #include "SimData.h"
+            #include "SimObject.h"
+
+
+#include "SystemAnnc.h"
+    #include "SimObject.h"
+    #include "SimLed.h"
+        #include "SimObject.h"
+        #include "HardLed.h"
+        #include "SimDivData.h"
+            #include "SimData.h"
+                #include "SimObject.h"
+
+
+

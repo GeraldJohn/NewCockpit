@@ -1,6 +1,7 @@
 #ifndef HARDENC_H
 #define HARDENC_H
 
+
 //! Deklaration class HardEnc
 class HardEnc : public Encoder {
 
@@ -70,16 +71,14 @@ HardEncSw::HardEncSw(const uint8_t PinA,
     _Cmode_set(-1){}
 
 //! Object Initialisierung
-HardEncSw myRadioEncSw = HardEncSw(30);
-HardEncSw myApEncSw    = HardEncSw(29);
-HardEncSw myGpsEncSw[2]  = {
-    HardEncSw(32),
-    HardEncSw(31)
-};
+HardEncSw myRadioEncSw   = HardEncSw(30);
+HardEncSw myApEncSw      = HardEncSw(29);
+HardEncSw myGpsEncSw[2]  = {HardEncSw(32),
+                            HardEncSw(31)};
 
 void HardEncSw::_setup() {
-    pinMode(myRadioEncSw._pinA, INPUT_PULLUP);
-    pinMode(myApEncSw._pinA,    INPUT_PULLUP);
+    pinMode(myRadioEncSw._pinA,   INPUT_PULLUP);
+    pinMode(myApEncSw._pinA,      INPUT_PULLUP);
     pinMode(myGpsEncSw[0]._pinA,  INPUT_PULLUP);
     pinMode(myGpsEncSw[1]. _pinA, INPUT_PULLUP);  }
 
@@ -88,8 +87,8 @@ void HardEncSw::_update() {
     myApEncSw.update();
     myGpsEncSw[0].update();
     myGpsEncSw[1].update();
-    myRadioEncSw.fallingEdge() ? myRadioEncSw._Cmode_set-- : 0;
-    myApEncSw.fallingEdge()    ? myApEncSw._Cmode_set--    : 0;
+    myRadioEncSw.fallingEdge()   ? myRadioEncSw._Cmode_set--   : 0;
+    myApEncSw.fallingEdge()      ? myApEncSw._Cmode_set--      : 0;
     myGpsEncSw[0].fallingEdge()  ? myGpsEncSw[0]._Cmode_set--  : 0;
     myGpsEncSw[1].fallingEdge()  ? myGpsEncSw[1]._Cmode_set--  : 0;   }
 

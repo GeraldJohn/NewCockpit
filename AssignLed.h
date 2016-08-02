@@ -2,7 +2,6 @@
 #define ASSIGNLED_H
 
 #include "SimLed.h"
-#include "SystemAnnc.h"
 
 /// Rote Warnleuchten
 /// erste LED von links
@@ -216,15 +215,6 @@ SimLEDBase *led_enc[] = {
     new SimLEDLocal(7, 3), //Ap_Led grün
 };
 
-b737::SystemAnnc *systemAnncs[] = {
-    new b737::SystemAnnc(0, 2, r1Anncs, sizeof(r1Anncs)),
-    new b737::SystemAnnc(1, 2, r2Anncs, sizeof(r2Anncs)),
-    new b737::SystemAnnc(2, 2, r3Anncs, sizeof(r3Anncs)),
-    new b737::SystemAnnc(3, 2, r4Anncs, sizeof(r4Anncs)),
-    new b737::SystemAnnc(4, 2, r5Anncs, sizeof(r5Anncs)),
-    new b737::SystemAnnc(5, 2, r6Anncs, sizeof(r6Anncs))
-};
 
-b737::MasterCaution masterCaution (7, 0, systemAnncs, sizeof(systemAnncs));
 
 #endif // ASSIGNLED_H

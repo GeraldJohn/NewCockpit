@@ -28,42 +28,42 @@ int SimGpsBase::_active_page = 0;
 
 /// Definition String Array gpsH[32]
 const String SimGpsBase::gpsH[32] = {
-    "                    ", //1
+    "                    ",
     "Direct:             ",
     "Dist:               ",
     "Time:               ",
 
-    "Range:              ", //2
+    "Range:              ",
     "Mode:               ",
     "Symbols: A W V N T w",
     "active:             ",
 
-    "Baro:               ", //3
+    " 3 :                ",
     " :                  ",
     " :                  ",
     " :                  ",
 
-    " 4 :                ", //4
+    " 4 :                ",
     " :                  ",
     " :                  ",
     " :                  ",
 
-    " 5 :                ", //5
+    " 5 :                ",
     " :                  ",
     " :                  ",
     " :                  ",
 
-    "0 1 2 sw_reg 3 4 5  ", //6
+    "0 1 2 sw_reg 3 4 5  ",
     "                    ",
     "                    ",
     "                    ",
 
-    "4 5 6 sw_reg 7 8 9  ", //7
+    "4 5 6 sw_reg 7 8 9  ",
     "                    ",
     "                    ",
     "                    ",
 
-    "0 1 2 led_reg 3 4 5 ", //8
+    "0 1 2 led_reg 3 4 5 ",
     "                    ",
     "                    ",
     "                    " };

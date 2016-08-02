@@ -1,31 +1,32 @@
 #ifndef SIMAPDATA_H
 #define SIMAPDATA_H
 
-
-#include "HardEnc.h"
-#include "HardLcd.h"
 #include "SimData.h"
+#include "blink.h"
+#include "HardLcd.h"
+#include "HardEnc.h"
+
 
 
 //! Deklaration class SimApData
 class SimApData : public SimData {
 
     public:
-        SimApData(const char  *ident,
-                  const int   &Mode,               //Zugehörigkeits Modus
+        SimApData(const char      *ident,
+                  const uint8_t   &Mode,               //Zugehörigkeits Modus
                   const uint8_t   &Row = 0,            //Zeile im Lcd
-                  const int   &CModeMax = 0,       //max Einstell Pos
-                  const int   &LowLimit = 0,       //für Parts
-                  const int   &UpLimit = 9,        //für Parts
-                  const float &Faktor = 1,         //für NKSt
-                  const bool  &Jump = true,        //Überspringen an Grenzwerten
-                  const int   &NKSt = 0,
-                  const bool *hasPowerFlag = &SimObject::hasPower);
+                  const uint8_t   &CModeMax = 0,       //max Einstell Pos
+                  const int16_t  &LowLimit = 0,       //für Parts
+                  const int16_t  &UpLimit = 9,        //für Parts
+                  const float     &Faktor = 1,         //für NKSt
+                  const bool      &Jump = true,        //Überspringen an Upper/Lower Grenzwerten
+                  const uint8_t   &NKSt = 0,           //Nachkommastellen
+                  const bool      *hasPowerFlag = &SimObject::hasPower);
 
         FlightSimFloat _drFlt;
-        short _changemode;          //Pos der aktuellen Änderung
-        int _cmodemax;
-        static int _active_page;         //aktuell gewählter Modus
+//        short _changemode;          //Pos der aktuellen Änderung
+        uint8_t _cmodemax;
+        static uint8_t _active_page;         //aktuell gewählter Modus
         static bool _print;
         static const String autopH[16];
         String _autopD;
@@ -34,8 +35,8 @@ class SimApData : public SimData {
 
     protected:
     private:
-        int _mode, i, _lower, _upper;
-        uint8_t _row;
+        uint8_t _mode, _row, ;
+        int16_t _lower, _upper;
         bool _jump;
         float _faktor;
 
@@ -46,10 +47,10 @@ class SimApData : public SimData {
         void change_Date(); };
 
 //!Initialisierung static
-int SimApData::_active_page = 0;
+uint8_t SimApData::_active_page = 0;
 bool SimApData::_print = true;
 
-/*enum AP_Mode {
+enum AP_Mode {
     _alt,
     _vvi,
     _hdg,
@@ -59,7 +60,7 @@ bool SimApData::_print = true;
     Test_Mode2,
     Test_Mode3,
     _Count // automagically = 8,
-};*/
+};
 
 /// Definition static String Array autopH[16]
 const String SimApData::autopH[16] = {          ///LCD Header Strings
@@ -83,14 +84,14 @@ const String SimApData::autopH[16] = {          ///LCD Header Strings
 
 //! Definition class SimApData
 SimApData::SimApData(const char  *ident,
-                     const int   &Mode,             //Zugehörigkeits Modus
+                     const uint8_t   &Mode,             //Zugehörigkeits Modus
                      const uint8_t   &Row,
-                     const int   &CModeMax,         //max Einstell Pos
-                     const int   &LowLimit,         //für Parts
-                     const int   &UpLimit,          //für Parts
+                     const uint8_t   &CModeMax,         //max Einstell Pos
+                     const int16_t   &LowLimit,         //für Parts
+                     const int16_t   &UpLimit,          //für Parts
                      const float &Faktor,
                      const bool  &Jump,             //Überspringen an Grenzwerten
-                     const int   &NKSt,
+                     const uint8_t   &NKSt,
                      const bool *hasPowerFlag
                     ) : SimData(NKSt, hasPowerFlag),
     _cmodemax(CModeMax),
@@ -162,31 +163,6 @@ void SimApData::print_Lcd() {
         Lcd1.print(_autopD); } }
 
 
-//! AP things
-DataRefIdent apIdent[][58] = {
-
-    "sim/cockpit2/autopilot/altitude_dial_ft",
-    "sim/cockpit2/autopilot/vvi_dial_fpm",
-    "sim/cockpit2/autopilot/heading_dial_deg_mag_pilot",
-    "sim/cockpit2/radios/actuators/nav1_obs_deg_mag_pilot",
-    "sim/cockpit2/radios/actuators/nav2_obs_deg_mag_pilot",
-    "sim/cockpit2/gauges/indicators/altitude_ft_pilot",
-    "sim/cockpit2/gauges/indicators/vvi_fpm_pilot",
-    "sim/cockpit2/gauges/indicators/compass_heading_deg_mag"
-};
-
-///                *ident, Mode,Row,MMax,Low,   UpLimit,Faktor, Jump, NKSt, hasPowerFlag
-SimData *apdata[] = {
-    new SimApData(apIdent[0], 0, 0, 2, 0,       30000,  1,  0),
-    new SimApData(apIdent[1], 1, 0, 0, -3000,   3000,   10, 0),
-    new SimApData(apIdent[2], 2, 0, 1, 0,       360,    0.1),
-    new SimApData(apIdent[3], 3, 0, 1, 0,       360,    0.1),
-    new SimApData(apIdent[4], 4, 0, 1, 0,       360,    0.1),
-    new SimApData(apIdent[5], 0, 1),
-    new SimApData(apIdent[6], 1, 1),
-    new SimApData(apIdent[7], 2, 1) ,
-    new SimApData(apIdent[7], 3, 1) ,
-    new SimApData(apIdent[7], 4, 1)      };
 
 
 #endif // SIMAPDATA_H

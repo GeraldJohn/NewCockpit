@@ -3,10 +3,13 @@
 
 #include "SimGpsBase.h"
 #include "HardLcd.h"
-#include "SimLed.h"
-#include "HardSwitch.h"
-#include "blink.h"
+//#include "SimLed.h"
+//#include "HardSwitch.h"
+//#include "blink.h"
 
+
+
+//! Deklaration class SimGpsLocal
 class SimGpsLocal : public SimGpsBase {
 
 public:
@@ -31,6 +34,8 @@ private:
     void _updateActive();
     void print_Lcd(); };
 
+
+//! Definition class SimGpsLocal
 SimGpsLocal::SimGpsLocal (byte &source,
                           const int &Page, //Zugehörigkeits Modus
                           const int &Row,
@@ -45,8 +50,11 @@ SimGpsLocal::SimGpsLocal (byte &source,
 
 { }
 
+
+//! Definition Methode _setup
 void SimGpsLocal::_setup(void) {}
 
+//! Definition Methode _update
 void SimGpsLocal::_update(bool updateOutput){
 
     if (_page == _active_page){
@@ -54,7 +62,7 @@ void SimGpsLocal::_update(bool updateOutput){
         _gpsD = String(_source, BIN);
 
         //for (int i = 0; i < 6; i++){
-        //led_byte_D[i] = String(SimLEDBase::_led_byte[i] , BIN);
+        //led_byte_D[i] = String(HardLed::_led_byte[i] , BIN);
 
         while (_gpsD.length() < 8){_gpsD = "0" + _gpsD;}
         //}
@@ -66,7 +74,7 @@ void SimGpsLocal::_update(bool updateOutput){
         }
     }
 
-/*   Vorsicht funktioniert!!
+/*   Vorsicht funktioniert!! */
     if (_active_page == 5 || _active_page == 6){
         ///Definition String array sw_byte_D
         String sw_byte_D[10];
@@ -112,34 +120,35 @@ void SimGpsLocal::_update(bool updateOutput){
 
     if (_active_page == 7){
         Lcd2.setCursor (0, 1);
-        Lcd2.print (SimLEDBase::led_byte_D[0]);
+        Lcd2.print (HardLed::led_byte_D[0]);
         Lcd2.setCursor (0, 2);
-        Lcd2.print (SimLEDBase::led_byte_D[1]);
+        Lcd2.print (HardLed::led_byte_D[1]);
         Lcd2.setCursor (0, 3);
-        Lcd2.print (SimLEDBase::led_byte_D[2]);
+        Lcd2.print (HardLed::led_byte_D[2]);
         Lcd2.setCursor (10, 1);
-        Lcd2.print (SimLEDBase::led_byte_D[3]);
+        Lcd2.print (HardLed::led_byte_D[3]);
         Lcd2.setCursor (10, 2);
-        Lcd2.print (SimLEDBase::led_byte_D[4]);
+        Lcd2.print (HardLed::led_byte_D[4]);
         Lcd2.setCursor (10, 3);
-        Lcd2.print (SimLEDBase::led_byte_D[5]);
+        Lcd2.print (HardLed::led_byte_D[5]);
     }//end mode7
-    */
+ /*   */
 }//end void
 
 
+//! Definition Methode _updateActive
 void SimGpsLocal::_updateActive(){}
 
 //SimGpsBase *controll = new SimGpsLocal();
 
 
 SimGpsBase *gpslocal_led[6] = {
-    new SimGpsLocal(SimLEDBase::_led_byte[0], 7, 1, 0),
-    new SimGpsLocal(SimLEDBase::_led_byte[1], 7, 2, 0),
-    new SimGpsLocal(SimLEDBase::_led_byte[2], 7, 3, 0),
-    new SimGpsLocal(SimLEDBase::_led_byte[3], 7, 1, 10),
-    new SimGpsLocal(SimLEDBase::_led_byte[4], 7, 2, 10),
-    new SimGpsLocal(SimLEDBase::_led_byte[5], 7, 3, 10),
+    new SimGpsLocal(HardLed::_led_byte[0], 7, 1, 0),
+    new SimGpsLocal(HardLed::_led_byte[1], 7, 2, 0),
+    new SimGpsLocal(HardLed::_led_byte[2], 7, 3, 0),
+    new SimGpsLocal(HardLed::_led_byte[3], 7, 1, 10),
+    new SimGpsLocal(HardLed::_led_byte[4], 7, 2, 10),
+    new SimGpsLocal(HardLed::_led_byte[5], 7, 3, 10),
 };
 
 

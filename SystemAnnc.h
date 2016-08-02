@@ -2,7 +2,7 @@
 #define SYSTEMANNC_H
 
 #include "SimObject.h"
-#include "SimLed.h"
+#include "AssignLed.h"
 
 //! Deklaration des Namespace b737
 namespace b737 {
@@ -204,6 +204,17 @@ private:
 
 
 }; //end class
+
+b737::SystemAnnc *systemAnncs[] = {
+    new b737::SystemAnnc(0, 2, r1Anncs, sizeof(r1Anncs)),
+    new b737::SystemAnnc(1, 2, r2Anncs, sizeof(r2Anncs)),
+    new b737::SystemAnnc(2, 2, r3Anncs, sizeof(r3Anncs)),
+    new b737::SystemAnnc(3, 2, r4Anncs, sizeof(r4Anncs)),
+    new b737::SystemAnnc(4, 2, r5Anncs, sizeof(r5Anncs)),
+    new b737::SystemAnnc(5, 2, r6Anncs, sizeof(r6Anncs))
+};
+
+b737::MasterCaution masterCaution (7, 0, systemAnncs, sizeof(systemAnncs));
 
 } //end namespace b737SysAnnc
 #endif // SYSTEMANNC_H

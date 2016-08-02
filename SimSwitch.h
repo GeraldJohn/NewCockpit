@@ -1,18 +1,17 @@
 #ifndef SIMSWITCH_H
 #define SIMSWITCH_H
 
-#include "SimObject.h"
 #include "HardSwitch.h"
+#include "SimObject.h"
+#include "SimGpsBase.h"
 #include "SimRadioData.h"
+#include "SystemAnnc.h"
+#include "blink.h"
+#include "HardEnc.h"
+#include "HardLcd.h"
 #include "SimApData.h"
 #include "SimGpsInt.h"
 #include "SimGpsFlt.h"
-#include "SimGpsCom.h"
-#include "SimGpsLocal.h"
-#include "SystemAnnc.h"
-#include "AssignLed.h"
-#include "HardEnc.h"
-
 
 //!Deklaration class SimSwitchBase
 class SimSwitchBase : public SimObject {
@@ -187,11 +186,11 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
             //! Abfrage: Wurde recall Taster betätigt
             if(HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)){
-                masterCaution.setMasterRecall(true);
+                b737::masterCaution.setMasterRecall(true);
                 blink::_blink = true;
             }
             else {
-                masterCaution.setMasterRecall(false);
+                b737::masterCaution.setMasterRecall(false);
                 blink::_blink = true;
             }
 
@@ -205,6 +204,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
                     //! Setze die jeweilige Frequenz und StanbyFrequenz auf active
                     SimRadioData::_pageSet = _if_true;
+                    SimStbyRadioData::_pageSet = _if_true;
 
                     //! Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myRadioEncSw._Cmode_set = -1;
@@ -284,7 +284,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
                 //! Abfrage: Wurde reset Taster geändert und true
                 if (_reg_nr == 2 && _sw_nr == 7) {
                     //if (HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr) == (1 << _sw_nr)){
-                    masterCaution.reset();
+                    b737::masterCaution.reset();
                     blink::_blink = true;
                     //}
                 }//endif re 2 sw 7

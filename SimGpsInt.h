@@ -2,8 +2,8 @@
 #define SIMGPSINT_H
 
 #include "SimGpsBase.h"
-#include "HardEnc.h"
-#include "blink.h"
+//#include "HardEnc.h"
+//#include "blink.h"
 
 
 //! Deklaration class SimGpsIntData
@@ -23,7 +23,7 @@ public:
                   const bool  *hasPowerFlag = &SimObject::hasPower);
 
     FlightSimInteger _drInt;
-    short _changemode;          //Pos der aktuellen Änderung
+//    short _changemode;          //Pos der aktuellen Änderung
     int _cmodemax;
     static bool _print;
 

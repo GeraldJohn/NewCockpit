@@ -49,3 +49,6 @@ Starter schalternull auf fuel valves; geändert in keypos dh. tank zuordnungen
 --Contrast_Bright::Output nur bei Änderung: verringert Flimmern nicht
 SimGpsLocal: Umstellung auf source Übernahme funktioniert nicht
              _active Pos aus row,pos für Efis fehlt noch
+
+Prüfen:
+Power_is_on und mode Function in Div_Data

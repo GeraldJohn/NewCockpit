@@ -12,7 +12,6 @@ class blink {
 protected:
         static elapsedMillis ms;
         static int dauer;
-        static int pause;
  };
 
 //! Definition
@@ -21,7 +20,6 @@ blink::blink() {}
 //! Object
 bool blink::_blink = false;
 int blink::dauer = 100;
-int blink::pause = 2;
 elapsedMillis blink::ms;
 
 //! Construction

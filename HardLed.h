@@ -1,7 +1,7 @@
 #ifndef HARDLED_H
 #define HARDLED_H
 
-#include "SimLed.h"
+//#include "SimLed.h"
 
 //! Deklaration class HardLed
 class HardLed {
@@ -16,12 +16,20 @@ public:
     /// Sendet Bits an DataPin mit Hilfe von clockPin
     static void _shiftOut(byte myreg_byte);
 
+    /// Static byte-array and static string-array(control-string)
+    static byte _led_byte[6];
+    static String led_byte_D[6];
+
 private:
     /// Deklariert Ic Pins
     static const byte dataPin;
     static const byte latchPin;
     static const byte clockPin;
 };
+
+//! Initialise static data members = Definition
+byte HardLed::_led_byte[6];
+String HardLed::led_byte_D[6];
 
 //!Definition class HardLed
 HardLed::HardLed() {}
@@ -48,13 +56,13 @@ void HardLed::_update(){
     digitalWrite(latchPin, 0);
 
     for(int i = 5; i >= 0; i--){
-        _shiftOut(SimLEDBase::_led_byte[i]);
+        _shiftOut(_led_byte[i]);
 
         ///Led_Data String wird gesetzt zur Kontrollanzeige im GpsLocal
-        SimLEDBase::led_byte_D[i] = String(SimLEDBase::_led_byte[i] , BIN);
-        while (SimLEDBase::led_byte_D[i].length() < 8){SimLEDBase::led_byte_D[i] = "0" + SimLEDBase::led_byte_D[i];}
+        led_byte_D[i] = String(_led_byte[i] , BIN);
+        while (led_byte_D[i].length() < 8){led_byte_D[i] = "0" + led_byte_D[i];}
 
-        SimLEDBase::_led_byte[i] = 0;
+        _led_byte[i] = 0;
     }
 
     digitalWrite(latchPin, 1);

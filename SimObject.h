@@ -6,6 +6,23 @@
 
 //! Deklaration class SimObject
 class SimObject {
+
+
+protected:
+    SimObject(const bool *powerSource) { setPowerSource(powerSource); }
+
+    virtual void _addToLinkedList(void);
+    virtual void _setup(void) = 0;
+    virtual void _update(bool updateOutput = true) = 0;
+
+        //! Specifies if this object needs simulated power available to operate.
+    bool _needsPower;
+
+        //! Pointer to power source.
+        /*! If _needsPower is set, this will be checked during update.*/
+    const bool *_powerSource;
+
+
 public:
         //! \param powerSource Pointer to bool which defines whether simulated
         //!        power is available to this SimObject
@@ -27,21 +44,6 @@ public:
 
         //! Default simulated power source
     static bool hasPower;
-
-protected:
-    SimObject(const bool *powerSource) {
-        setPowerSource(powerSource); }
-
-    virtual void _addToLinkedList(void);
-    virtual void _setup(void) = 0;
-    virtual void _update(bool updateOutput = true) = 0;
-
-        //! Specifies if this object needs simulated power available to operate.
-    bool _needsPower;
-
-        //! Pointer to power source.
-        /*! If _needsPower is set, this will be checked during update.*/
-    const bool *_powerSource;
 
 private:
     static SimObject *_first;

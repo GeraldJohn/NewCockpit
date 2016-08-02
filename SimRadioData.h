@@ -1,8 +1,6 @@
 #ifndef SIMRADIO_DATA_H
 #define SIMRADIO_DATA_H
 
-#include "HardEnc.h"
-#include "HardLcd.h"
 #include "SimData.h"
 
 //! Deklaration class SimRadioData
@@ -21,7 +19,7 @@ public:
     static bool _swaped;
     static FlightSimInteger _drInt_active;
     static const String radioH[9];
-    static String _radioD;
+    String _radioD;
     static const int posRadioData;
 
 private:
@@ -39,9 +37,22 @@ private:
 int SimRadioData::_pageSet = 0;
 bool SimRadioData::_print = true;
 bool SimRadioData::_swaped = false;
-String SimRadioData::_radioD = "";
+//String SimRadioData::_radioD = "";
 FlightSimInteger SimRadioData::_drInt_active;
 const int SimRadioData::posRadioData = 7;
+
+//!  RADIO Modes <= Mode RotarySwitch in ModeSwitch.ino
+enum Radio_Modes {
+    _com1,
+    _com2,
+    _nav1,
+    _nav2,
+    _adf1,
+    _adf2,
+    _atc,
+    _test
+};
+
 
 const String SimRadioData::radioH[9] = {
     "Com1:           ",
@@ -57,7 +68,7 @@ const String SimRadioData::radioH[9] = {
 
 //! Definition class SimRadioData
 SimRadioData::SimRadioData(const char *ident,
-                           const int &Mode, //Modus
+                           const int &Mode,
                            const int &Digits,
                            const int &NKSt,
                            const bool *hasPowerFlag
@@ -86,7 +97,7 @@ public:
                      const bool *hasPowerFlag = &SimObject::hasPower );
 
     FlightSimInteger _drInt;
-    short _changemode; //Pos der aktuellen Änderung
+ //   short _changemode; //Pos der aktuellen Änderung
     int _digits;
     static int _pageSet; //aktuell gewählter Modus
     static bool _print;  //soll drInt im Lcd gezeigt werden; plus: static drInt_active = drInt
@@ -312,48 +323,5 @@ void SimStbyRadioData::Lcd_print(){
     Lcd0.setCursor (posRadioData, 1);
     Lcd0.print(_radioD);
 }
-
-
-//! Object Initialisierung
-//!SimStbyRadioData
-//! Radio mode
-DataRefIdent freqIdent[][58] = {
-    "sim/cockpit2/radios/actuators/com1_frequency_hz",
-    "sim/cockpit2/radios/actuators/com2_frequency_hz",
-    "sim/cockpit2/radios/actuators/nav1_frequency_hz",
-    "sim/cockpit2/radios/actuators/nav2_frequency_hz",
-    "sim/cockpit2/radios/actuators/adf1_frequency_hz",
-    "sim/cockpit2/radios/actuators/adf2_frequency_hz"
-};
-
-///SimRadioData (*ident, &Mode, &Digits, &NKSt = 0, *hasPowerFlag = &SimObject::hasPower);
-SimData *freq[] = {
-    new SimRadioData(freqIdent[0], 0, 1, 2),
-    new SimRadioData(freqIdent[1], 1, 1, 2),
-    new SimRadioData(freqIdent[2], 2, 1, 2),
-    new SimRadioData(freqIdent[3], 3, 1, 2),
-    new SimRadioData(freqIdent[4], 4),
-    new SimRadioData(freqIdent[5], 5) };
-
-DataRefIdent freq_stbyIdent[][58] = {
-    "sim/cockpit2/radios/actuators/com1_standby_frequency_hz",
-    "sim/cockpit2/radios/actuators/com2_standby_frequency_hz",
-    "sim/cockpit2/radios/actuators/nav1_standby_frequency_hz",
-    "sim/cockpit2/radios/actuators/nav2_standby_frequency_hz",
-    "sim/cockpit2/radios/actuators/adf1_standby_frequency_hz",
-    "sim/cockpit2/radios/actuators/adf2_standby_frequency_hz",
-    "sim/cockpit2/radios/actuators/transponder_code"
-};
-
-///SimStbyRadioData(ident, &Mode, &Digits, &LowLimit = 0, &UpLimit = 9, &Step = 1, &Jump = true, &NKSt = 0, *hasPowerFlag);
-SimData *freq_stby[] = {
-    new SimStbyRadioData(freq_stbyIdent[0], 0, 1, 118, 136, 25, true, 2),
-    new SimStbyRadioData(freq_stbyIdent[1], 1, 1, 118, 136, 25, true, 2),
-    new SimStbyRadioData(freq_stbyIdent[2], 2, 1, 108, 117, 50, true, 2),
-    new SimStbyRadioData(freq_stbyIdent[3], 3, 1, 108, 117, 50, true, 2),
-    new SimStbyRadioData(freq_stbyIdent[4], 4, 2),
-    new SimStbyRadioData(freq_stbyIdent[5], 5, 2),
-    new SimStbyRadioData(freq_stbyIdent[6], 6, 3, 0, 7) };
-
 
 #endif // SIMRADIO_DATA_H

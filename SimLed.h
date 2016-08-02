@@ -2,6 +2,7 @@
 #define SIMLED_H
 
 #include "SimObject.h"
+#include "HardLed.h"
 #include "HardEnc.h"
 #include "SimDivData.h"
 
@@ -24,8 +25,6 @@ public:
     /// Methode Enable bulb test mode
     static void lightTest(bool lightAll) {_testAll = lightAll;}
 
-    static byte _led_byte[6];
-    static String led_byte_D[6];
     static bool _testAll; //vorher private:
 
 protected:
@@ -53,8 +52,8 @@ private:
 
 //! Initialise static data members = Definition
 bool SimLEDBase::_testAll = false;
-byte SimLEDBase::_led_byte[6];
-String SimLEDBase::led_byte_D[6];
+//byte SimLEDBase::_led_byte[6];            siehe oben
+//String SimLEDBase::led_byte_D[6];
 
 //! Definition class SimLEDBase
 SimLEDBase::SimLEDBase(const int &ledNr,
@@ -90,7 +89,7 @@ void SimLEDBase::_update(bool updateOutput) {
 
     /// unless ordered otherwise, light or extinguish LED based on our lighting state
     if (updateOutput){
-        SimLEDBase::_led_byte[_reg_nr] += (_lit << _led_nr);
+        HardLed::_led_byte[_reg_nr] += (_lit << _led_nr);
     }
 } //end Definition
 
