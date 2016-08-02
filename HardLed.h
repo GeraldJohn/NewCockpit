@@ -1,7 +1,6 @@
 #ifndef HARDLED_H
 #define HARDLED_H
 
-//#include "SimLed.h"
 
 //! Deklaration class HardLed
 class HardLed {

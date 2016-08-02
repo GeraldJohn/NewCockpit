@@ -83,7 +83,7 @@ void SimLEDBase::_update(bool updateOutput) {
     }
 
     /// we are not lit if the sim isn't running or no simulated power
-    if( !FlightSim.isEnabled() || !SimDivData::_power_is_on) {
+    if( !FlightSim.isEnabled() || !SimDivFltData::_power_is_on) {
         _lit = false;
     }
 

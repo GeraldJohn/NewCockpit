@@ -3,7 +3,6 @@ makefile
 
 SystemAnnc.h
 SimSwitch.h
-SimRadioData.h
 SimObject.h
 SimLed.h
 SimLcd.h
@@ -14,7 +13,7 @@ SimGpsCom.h
 SimGpsBase.h
 SimDivData.h
 SimData.h
-SimApData.h
+SimAutoPt.h
 HardSwitch.h
 HardLed.h
 HardLcd.h
@@ -27,3 +26,9 @@ NewCockpit.ino
 to_do_list.txt
 SimGpsLocal.h
 AssignGpsCom.h
+Programm-Ablauf.txt
+AssignAutoPt.h
+AssignGpsFlt.h
+SimRadio.h
+AssignRadio.h
+Doxyfile

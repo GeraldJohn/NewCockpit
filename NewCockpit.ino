@@ -1,33 +1,37 @@
 
 #include <Bounce.h>
 #include <Encoder.h>
-#include <LiquidCrystal_SR.h>
 #include <Arduino.h>
+#include <LiquidCrystal_SR.h>
 
 //!Kommentar wird erneuert
 
 #include "AssignLed.h"
-#include "AssignApData.h"
-#include "AssignRadioData.h"
+#include "AssignAutoPt.h"
+#include "AssignRadio.h"
 #include "AssignSwitch.h"
-//#include "AssignGpsInt.h"
-//#include "AssignGpsCom.h"
+#include "AssignGpsInt.h"
+#include "AssignGpsCom.h"
 
 
-//#include "HardSwitch.h"
-//#include "SimObject.h"
+/*
+#include "HardSwitch.h"
+#include "HardLcd.h"
+#include "HardEnc.h"
+#include "SimObject.h"
 
-//#include "SystemAnnc.h"
+#include "SystemAnnc.h"
 #include "SimGpsLocal.h"
-//#include "SimSwitch.h"
+#include "SimSwitch.h"
 
 
-//#include "SimLcd.h"
-//#include "SimData.h"
-//#include "SimDivData.h"
-//#include "SimApData.h" "
-//#include "SimRadioData.h"
-
+#include "SimLcd.h"
+#include "SimData.h"
+#include "SimDivData.h"
+#include "SimAutoPt.h" "
+#include "SimRadio.h"
+#include "blink.h"
+*/
 
 void setup() {
     HardEncSw::_setup();
@@ -65,7 +69,7 @@ void loop() {
 
   Lcd2.setCursor (0, 1);
   Lcd2.print("_autopD_old ");
-  Lcd2.print(SimApData::_autopD_old);
+  Lcd2.print(SimAutoPt::_autopD_old);
   Lcd2.setCursor (0, 2);
   Lcd2.print("bus_volts: ");
   Lcd2.print(bus_volts._drFloat);

@@ -1,8 +1,6 @@
 #ifndef SYSTEMANNC_H
 #define SYSTEMANNC_H
 
-#include "SimObject.h"
-#include "AssignLed.h"
 
 //! Deklaration des Namespace b737
 namespace b737 {

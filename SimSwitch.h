@@ -2,14 +2,14 @@
 #define SIMSWITCH_H
 
 #include "HardSwitch.h"
-#include "SimObject.h"
+//#include "SimObject.h"
 #include "SimGpsBase.h"
-#include "SimRadioData.h"
+//#include "SimRadio.h"
 #include "SystemAnnc.h"
-#include "blink.h"
-#include "HardEnc.h"
-#include "HardLcd.h"
-#include "SimApData.h"
+//#include "blink.h"
+//#include "HardEnc.h"
+//#include "HardLcd.h"
+//#include "SimAutoPt.h"
 #include "SimGpsInt.h"
 #include "SimGpsFlt.h"
 
@@ -135,7 +135,7 @@ void SimSwitchCom::_update(bool updateOutput) {
     if (updateOutput){
         if (_mode == 0 && SimGpsBase::_active_page != 0 ||      //!< normale Tastenbelegung
                 _mode == 1 && SimGpsBase::_active_page == 0 ||  //!< GPS Tastenbelegung
-                _mode == 2 && SimRadioData::_pageSet == 6){     //!< im ATC Modus soll der Swap Taster die Transponder id starten
+                _mode == 2 && SimRadio::_pageSet == 6){     //!< im ATC Modus soll der Swap Taster die Transponder id starten
             if (HardSwitch::changed_byte[_reg_nr] & (1 << _sw_nr)){
                 ((HardSwitch::sw_byte[_reg_nr] & (1 << _sw_nr)) == (1 << _sw_nr)) ? _drCom = _if_true : _drCom = _if_false;
             }
@@ -203,22 +203,22 @@ void SimSwitchLocal::_update(bool updateOutput) {
                 if (_reg_nr == 3){
 
                     //! Setze die jeweilige Frequenz und StanbyFrequenz auf active
-                    SimRadioData::_pageSet = _if_true;
-                    SimStbyRadioData::_pageSet = _if_true;
+                    SimRadio::_pageSet = _if_true;
+                    SimStbyRadio::_pageSet = _if_true;
 
                     //! Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myRadioEncSw._Cmode_set = -1;
 
                     //! Setze Flag für Lcd print
-                    SimRadioData::_print = true;
-                    SimStbyRadioData::_print = true;
+                    SimRadio::_print = true;
+                    SimStbyRadio::_print = true;
 
                     //! RadioLcd erste Zeile
                     Lcd0.setCursor (0, 0);
-                    Lcd0.print(SimRadioData::radioH[SimRadioData::_pageSet]);   //"Com1" etc
+                    Lcd0.print(SimRadio::radioH[SimRadio::_pageSet]);   //"Com1" etc
                     //! RadioLcd zweite Zeile
                     Lcd0.setCursor (0, 1);
-                    Lcd0.print(SimRadioData::radioH[8]);    //"Standby  .  "
+                    Lcd0.print(SimRadio::radioH[8]);    //"Standby  .  "
                 }//endif reg_nr == 3
 
 
@@ -226,7 +226,7 @@ void SimSwitchLocal::_update(bool updateOutput) {
                 if (_reg_nr == 9) {
 
                     //! Setze die eingestellte Frequenz und StanbyFrequenz auf active
-                    SimApData::_active_page = _if_true;
+                    SimAutoPt::_active_page = _if_true;
 
                     //! Setze _CMode_set auf -1 => CMode_set = CModeMax
                     myApEncSw._Cmode_set = -1;
@@ -234,12 +234,12 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
                     //! -> Lcd
                     Lcd1.setCursor (0, 0);
-                    Lcd1.print(SimApData::autopH[SimApData::_active_page * 2]);   //"Alt " etc
+                    Lcd1.print(SimAutoPt::autopH[SimAutoPt::_active_page * 2]);   //"Alt " etc
                     Lcd1.setCursor (0, 1);
-                    Lcd1.print(SimApData::autopH[SimApData::_active_page * 2 + 1]);    //"Standby  .  "
+                    Lcd1.print(SimAutoPt::autopH[SimAutoPt::_active_page * 2 + 1]);    //"Standby  .  "
 
                     //! Setze Flag für Lcd print
-                    SimApData::_print = true;
+                    SimAutoPt::_print = true;
                 } //endif reg_nr == 9
 
                 //! Abfrage: Ist _reg_nr == 4: GPS Rotary Switch
@@ -271,8 +271,8 @@ void SimSwitchLocal::_update(bool updateOutput) {
 
                 //! Abfrage: Wurde Swap Taster geändert und true
                 if (_reg_nr == 2 && _sw_nr == 5){
-                    if(SimRadioData::_pageSet < 6){
-                        SimStbyRadioData::_swap = true;
+                    if(SimRadio::_pageSet < 6){
+                        SimStbyRadio::_swap = true;
                         blink::_blink = true;
 
                         //! Setze _CMode_set auf -1 => CMode_set = CModeMax

@@ -21,17 +21,17 @@ Include                    nutzt                   ermöglicht Methode
     #include "SimLed.h"                                     SimObject
         #include "SimObject.h"
         #include "HardLed.h"
-        #include "SimDivData.h"
+        #include "SimDivFltData.h"
             #include "SimData.h"
                 #include "SimObject.h"
 
-#include "AssignApData.h"
-    #include "SimApData.h"
+#include "AssignAutoPt.h"
+    #include "SimAutoPt.h"
         #include "SimData.h"
             #include "SimObject.h"
 
-#include "AssignRadioData.h"
-    #include "SimRadioData.h"
+#include "AssignRadio.h"
+    #include "SimRadio.h"
         #include "SimData.h"
             #include "SimObject.h"
 
@@ -41,7 +41,7 @@ Include                    nutzt                   ermöglicht Methode
     #include "SimLed.h"
         #include "SimObject.h"
         #include "HardLed.h"
-        #include "SimDivData.h"
+        #include "SimDivFltData.h"
             #include "SimData.h"
                 #include "SimObject.h"
 

@@ -1,6 +1,8 @@
 #ifndef HARDLCD_H
 #define HARDLCD_H
 
+#include "SimDivData.h"
+
 //! Deklaration class HardLcd
 class HardLcd : public LiquidCrystal_SR{
 public:
@@ -13,8 +15,7 @@ public:
 
     /// Definiert PinModes
     static void _setup();
-
-//    static void _update(); //lcd.print???
+    static void _update(); //lcd.print???
 
 private:
     /// Deklariert Ic Pins
@@ -62,9 +63,23 @@ void HardLcd::_setup(){
 }
 
 //! Definition Methode _update
-//void HardLcd::_update(){}
+void HardLcd::_update(){
 
 
+
+
+
+
+
+
+
+
+
+
+
+}
+
+//___________________________________________________________________________________________
 //! Deklaration class contrast_brightn
 class contrast_brightn
 {
@@ -105,7 +120,13 @@ void contrast_brightn::_update(){
     //! Map to LCD Backlight und Contrast
     brt = map(brtValue, 0, 1023, 0, 255);
     ctr = map(ctrValue, 0, 1023, 0, 255);
-    analogWrite(brtOutPin, brt);
+
+    /// we are not lit if the sim is running and no simulated power
+    if( !FlightSim.isEnabled() || !SimDivFltData::_power_is_on || !SimDivIntData::_avionic_on) {
+        analogWrite(brtOutPin, 0);}
+    else {
+        analogWrite(brtOutPin, brt);}
+
     analogWrite(ctrOutPin, ctr);
 }
 

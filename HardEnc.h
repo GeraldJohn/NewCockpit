@@ -87,10 +87,10 @@ void HardEncSw::_update() {
     myApEncSw.update();
     myGpsEncSw[0].update();
     myGpsEncSw[1].update();
-    myRadioEncSw.fallingEdge()   ? myRadioEncSw._Cmode_set--   : 0;
-    myApEncSw.fallingEdge()      ? myApEncSw._Cmode_set--      : 0;
-    myGpsEncSw[0].fallingEdge()  ? myGpsEncSw[0]._Cmode_set--  : 0;
-    myGpsEncSw[1].fallingEdge()  ? myGpsEncSw[1]._Cmode_set--  : 0;   }
+    myRadioEncSw.fallingEdge()  ? myRadioEncSw._Cmode_set--   : 0;
+    myApEncSw.fallingEdge()     ? myApEncSw._Cmode_set--      : 0;
+    myGpsEncSw[0].fallingEdge() ? myGpsEncSw[0]._Cmode_set--  : 0;
+    myGpsEncSw[1].fallingEdge() ? myGpsEncSw[1]._Cmode_set--  : 0;   }
 
 
 #endif // HARDENC_H
