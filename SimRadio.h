@@ -24,6 +24,7 @@ public:
     static const String radioH[9];
     String _radioD;
     static const int posRadio;
+    static const int colRadio;
 
 private:
     int _mode;
@@ -43,6 +44,7 @@ bool SimRadio::_swaped = false;
 //String SimRadio::_radioD = "";
 FlightSimInteger SimRadio::_drInt_active;
 const int SimRadio::posRadio = 7;
+const int SimRadio::colRadio = 0;
 
 //!  RADIO Modes <= Mode RotarySwitch in ModeSwitch.ino
 enum Radio_Modes {
@@ -108,6 +110,7 @@ public:
     static String _radioD;
     static FlightSimInteger _drInt_active;
     static const int posRadio;
+    static const int colRadio;
 
 private:
     int _drInt_VK;
@@ -131,6 +134,7 @@ bool SimStbyRadio::_swap = false;
 String SimStbyRadio::_radioD = "";
 FlightSimInteger SimStbyRadio::_drInt_active;
 const int SimStbyRadio::posRadio = 7;
+const int SimStbyRadio::colRadio = 1;
 
 //! Definition class SimStbyRadio
 SimStbyRadio::SimStbyRadio(const char *ident,
@@ -215,6 +219,7 @@ void SimStbyRadio::_update(bool updateOutput){
             myRadioEnc._diff = 0; }
 
         if (_print){
+            _print = false;
             _drInt_active = _drInt;
             Lcd_print();
         }
@@ -323,8 +328,9 @@ void SimStbyRadio::Lcd_print(){
     }
 
     /// RadioLcd zweite Zeile
-    Lcd0.setCursor (posRadio, 1);
+    Lcd0.setCursor (posRadio, colRadio);
     Lcd0.print(_radioD);
+    blink::_blink = true;
 }
 
 #endif // SIMRADIO_DATA_H
